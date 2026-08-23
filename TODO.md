@@ -6,18 +6,16 @@ Sổ backlog dài hạn của dự án (bền qua nhiều phiên). Quy ước gh
 _(trống)_
 
 ## 🔨 Đang làm
-- [ ] (2026-08-23) `[BE]` Dựng tầng Application/Infrastructure/API để backend build được qua Docker.
+_(trống)_
 
 ## 🔜 Cần làm
-- [ ] (2026-08-23) `[BE]` DTOs (record) + Services nghiệp vụ: Auth, Product/Variant, Cart, Order, Payment, Coupon, Review, Wishlist, Warranty, TradeIn, FlashSale, Report, Notification.
-- [ ] (2026-08-23) `[BE]` Controllers + Middleware lỗi + JWT + Seeder dữ liệu điện thoại (Brand/Category/Product mẫu).
-- [ ] (2026-08-23) `[BE]` MinIO client + Upload ảnh; SignalR hub thông báo realtime.
-- [ ] (2026-08-23) `[FE]` Khởi tạo Vue 3 + Vite + PrimeVue + Pinia + Router; layout khách & admin.
+- [ ] (2026-08-23) `[FE]` Khởi tạo Vue 3 + Vite + PrimeVue + Pinia + Router; layout khách & admin (tông xanh công nghệ).
 - [ ] (2026-08-23) `[FE]` Trang khách: Home (Flash Sale), Danh sách (lọc hãng/giá/dung lượng), Chi tiết (chọn màu×dung lượng, thông số, trả góp), So sánh, Giỏ, Checkout, Đơn hàng, Tra cứu bảo hành, Wishlist, Tài khoản, Auth.
 - [ ] (2026-08-23) `[FE]` Trang admin: Dashboard, Sản phẩm (sinh biến thể ma trận + thông số), Thương hiệu, Danh mục, Đơn (nhập IMEI khi giao), Coupon, Flash Sale, Vận chuyển, Bảo hành, Thu cũ, Báo cáo, Audit log.
 
 ## ✅ Đã xong
-- [x] (2026-08-23) `[BE]` Khởi tạo solution 4 layer (Domain/Application/Infrastructure/API) + toàn bộ Domain entities (28 entity đặc thù điện thoại), IAppDbContext, AppDbContext (index/precision/soft-delete), docker-compose, docs dự án.
+- [x] (2026-08-23) `[BE]` **Backend build + chạy được qua Docker** (verify: `docker compose build api` xanh, container lên, Swagger 200). Đủ tầng Application (45 file: DTOs record, Services, DI) + Infrastructure (JWT/PBKDF2, MinIO, Email Log/SMTP, DbSeeder điện thoại) + API (28 file: Program, 21 controller, middleware lỗi, SignalR hub, OrderExpiry). Seed 6 hãng · 4 danh mục · 14 điện thoại (biến thể Màu×Dung lượng, 6-8 thông số, trả góp 6/9/12 tháng, bảo hành 12 tháng, Flash Sale). Test OK: brands/products/detail/categories/login/warranty/flash-sale.
+- [x] (2026-08-23) `[BE]` Khởi tạo solution 4 layer (Domain/Application/Infrastructure/API) + toàn bộ Domain entities (29 entity đặc thù điện thoại), IAppDbContext, AppDbContext (index/precision/soft-delete), docker-compose, docs dự án.
 
 ## 💡 Ý tưởng
 - [ ] So sánh máy nâng cao (highlight khác biệt thông số).
