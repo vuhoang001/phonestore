@@ -1,0 +1,31 @@
+# .NET
+bin/
+obj/
+*.user
+
+# Node
+node_modules/
+frontend/dist/
+npm-debug.log*
+
+# Env / secrets
+*.env
+.env
+.env.local
+
+# IDE
+.vs/
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Ảnh user upload lúc chạy
+backend/src/PhoneStore.API/wwwroot/uploads/user/
+
+# Build logs tạm
+*.log
+
+# Backup DB/MinIO cục bộ
+backup/
