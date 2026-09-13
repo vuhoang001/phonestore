@@ -29,3 +29,4 @@ backend/src/PhoneStore.API/wwwroot/uploads/user/
 
 # Backup DB/MinIO cục bộ
 backup/
+.vibecode-backup*/
