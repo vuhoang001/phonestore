@@ -1,57 +1,58 @@
 import { definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 
-// Bảng màu thương hiệu: XANH công nghệ (tech-blue) cho cửa hàng điện thoại.
-// Đây là "single source of truth" cho màu primary — đồng bộ với --brand (#1e6fff) trong main.css.
+// Phong cách MINIMAL PREMIUM (Apple-like): màu nhấn xanh Apple (#0071e3) dùng dè,
+// bo góc lớn, nút bo tròn dạng viên (pill), bóng khuếch tán rất nhẹ.
+// "single source of truth" cho màu primary — đồng bộ với --brand (#0071e3) trong main.css.
 const PhonePreset = definePreset(Aura, {
   semantic: {
     primary: {
-      50: '#eff5ff',
-      100: '#dbe8ff',
-      200: '#bcd4ff',
-      300: '#8fb6ff',
-      400: '#4d8bff',
-      500: '#1e6fff', // màu thương hiệu chính (xanh công nghệ)
-      600: '#1657cc',
-      700: '#1247a6',
-      800: '#123c85',
-      900: '#13366b',
-      950: '#0d2044'
+      50: '#f0f7ff',
+      100: '#dbeafe',
+      200: '#bcd8fb',
+      300: '#7cbcf7',
+      400: '#3898ec',
+      500: '#0071e3', // màu nhấn chính (xanh Apple)
+      600: '#0056b3',
+      700: '#00458f',
+      800: '#013a75',
+      900: '#0a325f',
+      950: '#07213f'
     },
-    // Bo góc mềm mại (medium radius) theo lựa chọn thiết kế.
-    borderRadius: { none: '0', xs: '4px', sm: '8px', md: '10px', lg: '12px', xl: '16px' },
-    // Ô nhập GỌN, mật độ cao (dày dặn vừa phải) — rule toàn cục cho mọi input/select/number.
-    formField: { paddingX: '0.625rem', paddingY: '0.375rem', fontSize: '0.875rem', sm: { fontSize: '0.8rem', paddingY: '0.3rem' } },
-    // Overlay (Dialog/ConfirmDialog/Popover): bo góc mềm + bóng sâu tinh tế + padding rộng rãi.
+    // Bo góc LỚN hơn cho cảm giác mềm, cao cấp.
+    borderRadius: { none: '0', xs: '6px', sm: '10px', md: '12px', lg: '16px', xl: '20px' },
+    // Ô nhập airy hơn (nhiều khoảng thở) — rule toàn cục cho mọi input/select/number.
+    formField: { paddingX: '0.8rem', paddingY: '0.5rem', fontSize: '0.9rem', sm: { fontSize: '0.85rem', paddingY: '0.4rem' } },
+    // Overlay (Dialog/ConfirmDialog/Popover): bo góc lớn + bóng khuếch tán nhẹ + padding rộng.
     overlay: {
-      modal: { borderRadius: '16px', padding: '1.25rem 1.5rem', shadow: '0 24px 64px rgba(20, 30, 60, 0.18)' },
-      popover: { borderRadius: '12px', shadow: '0 12px 32px rgba(20, 30, 60, 0.12)' }
+      modal: { borderRadius: '20px', padding: '1.5rem 1.75rem', shadow: '0 30px 70px rgba(0, 0, 0, 0.16)' },
+      popover: { borderRadius: '16px', shadow: '0 14px 36px rgba(0, 0, 0, 0.12)' }
     },
     colorScheme: {
       light: {
         primary: {
-          color: '#1e6fff',
+          color: '#0071e3',
           contrastColor: '#ffffff',
-          hoverColor: '#1657cc',
-          activeColor: '#1247a6'
+          hoverColor: '#0056b3',
+          activeColor: '#00458f'
         },
-        formField: { borderRadius: '8px' },
-        content: { borderRadius: '12px' },
-        // Nền mờ sau dialog: tối vừa đủ để nội dung nổi bật (kết hợp blur ở main.css).
-        mask: { background: 'rgba(20, 30, 60, 0.45)' }
+        formField: { borderRadius: '12px' },
+        content: { borderRadius: '16px' },
+        // Nền mờ sau dialog: trung tính, tối vừa đủ (kết hợp blur ở main.css).
+        mask: { background: 'rgba(0, 0, 0, 0.4)' }
       }
     }
   },
   components: {
     button: {
-      // Nút nhỏ gọn hơn, chữ 14px, bo góc vừa.
-      root: { paddingX: '0.85rem', paddingY: '0.45rem', gap: '0.4rem', borderRadius: '10px', label: { fontWeight: '600' } },
-      root_sm: { paddingX: '0.65rem', paddingY: '0.3rem', fontSize: '0.8rem' }
+      // Nút viên (pill) kiểu Apple — dấu hiệu premium; padding rộng, chữ đậm.
+      root: { paddingX: '1.15rem', paddingY: '0.5rem', gap: '0.45rem', borderRadius: '980px', label: { fontWeight: '600' } },
+      root_sm: { paddingX: '0.85rem', paddingY: '0.35rem', fontSize: '0.82rem' }
     },
     dialog: {
-      // Tiêu đề đậm & to hơn cho phân cấp rõ; nội dung có padding trên để không dính divider header.
-      title: { fontSize: '1.2rem', fontWeight: '700' },
-      content: { padding: '1.25rem 1.5rem' }
+      // Tiêu đề đậm & to cho phân cấp rõ; nội dung padding rộng.
+      title: { fontSize: '1.35rem', fontWeight: '700' },
+      content: { padding: '1.5rem 1.75rem' }
     }
   }
 })

@@ -99,13 +99,14 @@ async function toggleWish(e: Event) {
   transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease);
   display: flex; flex-direction: column;
 }
-.card:hover { box-shadow: var(--shadow-hover); border-color: var(--brand); transform: translateY(-3px); }
+/* Minimal: hover chỉ nhấc nhẹ + bóng khuếch tán, KHÔNG đổi viền sang xanh */
+.card:hover { box-shadow: var(--shadow-hover); border-color: var(--border-strong); transform: translateY(-4px); }
 .card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-/* Ảnh điện thoại nền trắng → contain để không cắt máy */
+/* Ảnh điện thoại nền trắng → contain, nhiều khoảng thở kiểu premium */
 .thumb { position: relative; aspect-ratio: 1; background: #fff; overflow: hidden; }
-.thumb img { width: 100%; height: 100%; object-fit: contain; padding: 8px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.card:hover .thumb img { transform: scale(1.06); }
+.thumb img { width: 100%; height: 100%; object-fit: contain; padding: 16px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.card:hover .thumb img { transform: scale(1.05); }
 
 /* Nhãn góc trái */
 .badge {
@@ -114,8 +115,10 @@ async function toggleWish(e: Event) {
   font-size: 10px; font-weight: 800; letter-spacing: 0.3px; color: #fff;
   padding: 3px 8px; border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
 }
-.badge.hot { background: linear-gradient(120deg, var(--brand), var(--brand-light)); }
-.badge.loved { background: linear-gradient(120deg, #f5a623, #ffb400); color: #7a4b00; }
+/* Minimal: nhãn góc solid, tiết chế (không gradient sặc sỡ) */
+.badge.hot { background: var(--text); color: #fff; }
+.badge.loved { background: #fff; color: var(--text); border: 1px solid var(--border); }
+.badge.loved .pi { color: var(--star); }
 .badge .pi { font-size: 10px; }
 
 /* Nút yêu thích */
@@ -134,17 +137,17 @@ async function toggleWish(e: Event) {
 .soldout { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(255, 255, 255, 0.65); z-index: 1; }
 .soldout span { background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: var(--radius-pill); }
 
-.body { padding: 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.brand { font-size: 11px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: 0.02em; }
+.body { padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-2); flex: 1; }
+.brand { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
 .name {
-  font-size: 13px; font-weight: 500; margin: 0; line-height: 1.4; height: 2.8em;
+  font-size: 14px; font-weight: 500; margin: 0; line-height: 1.4; height: 2.8em;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text);
 }
 .price-row { display: flex; align-items: baseline; gap: 1px; margin-top: auto; color: var(--price); flex-wrap: wrap; }
-.cur { font-size: 12px; font-weight: 700; }
-.price { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.cur { font-size: 12px; font-weight: 600; }
+.price { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
 .old-price { font-size: 12px; color: var(--text-muted); text-decoration: line-through; font-weight: 500; margin-left: 5px; }
-.flash-pct { display: inline-flex; align-items: center; gap: 2px; margin-left: auto; background: var(--price); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
+.flash-pct { display: inline-flex; align-items: center; gap: 2px; margin-left: auto; background: var(--sale); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
 .flash-pct .pi { font-size: 9px; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 4px; }
