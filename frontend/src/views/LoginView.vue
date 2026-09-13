@@ -15,7 +15,7 @@ const toast = useToast()
 const auth = useAuthStore()
 const cart = useCartStore()
 
-const email = ref('customer@shop.com')
+const email = ref('customer@phone.com')
 const password = ref('Customer@123')
 const loading = ref(false)
 
@@ -39,7 +39,7 @@ async function submit() {
   <div class="auth-wrap">
     <div class="auth-card">
       <h1>Đăng nhập</h1>
-      <p class="text-muted">Demo: admin@shop.com / Admin@123 · customer@shop.com / Customer@123</p>
+      <p class="text-muted">Demo: admin@phone.com / Admin@123 · customer@phone.com / Customer@123</p>
       <form @submit.prevent="submit" class="form">
         <label>Email</label>
         <InputText v-model="email" type="email" required class="w-full" />
