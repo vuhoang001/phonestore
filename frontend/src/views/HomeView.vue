@@ -125,30 +125,35 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 </script>
 
 <template>
-  <!-- Hero: carousel ảnh thật + 2 banner phụ, nền tràn viền cho hết trắng 2 bên -->
-  <section class="hero">
-    <div class="hero-inner">
-      <Carousel :value="banners" :numVisible="1" :numScroll="1" circular :autoplayInterval="4000" :showNavigators="false" class="banner-carousel hero-main">
-        <template #item="{ data }">
-          <div class="banner" :style="{ backgroundImage: data.tint + ', url(' + data.img + ')' }">
-            <div class="banner-text">
-              <span class="tagline"><i class="pi pi-bolt" /> PhoneStore Ưu Đãi</span>
-              <h1>{{ data.title }}</h1>
-              <p>{{ data.sub }}</p>
-              <button class="cta" @click="router.push('/products')">Mua ngay <i class="pi pi-arrow-right" /></button>
+  <!-- Hero spotlight full-bleed (Apple-store style): 1 tuyên ngôn lớn, chữ căn giữa, chồng tầng -->
+  <section class="spot">
+    <Carousel :value="banners" :numVisible="1" :numScroll="1" circular :autoplayInterval="5000" :showNavigators="false" class="spot-carousel">
+      <template #item="{ data }">
+        <div class="spot-slide" :style="{ backgroundImage: 'url(' + data.img + ')' }">
+          <div class="spot-text">
+            <span class="eyebrow">PhoneStore</span>
+            <h1>{{ data.title }}</h1>
+            <p>{{ data.sub }}</p>
+            <div class="spot-links">
+              <button class="spot-link primary" @click="router.push('/products')">Mua ngay <i class="pi pi-arrow-right" /></button>
+              <button class="spot-link" @click="router.push('/trade-in')">Thu cũ đổi mới <i class="pi pi-angle-right" /></button>
             </div>
           </div>
-        </template>
-      </Carousel>
-
-      <div class="hero-side">
-        <div v-for="p in promos" :key="p.title" class="promo"
-          :style="{ backgroundImage: 'linear-gradient(120deg, rgba(0,0,0,.5), rgba(0,0,0,.05)), url(' + p.img + ')' }"
-          @click="router.push(p.to)">
-          <div class="promo-txt"><strong>{{ p.title }}</strong><span>{{ p.sub }}</span></div>
         </div>
+      </template>
+    </Carousel>
+  </section>
+
+  <!-- Two-up band (Apple two-tile): 2 ô lớn, chữ căn giữa phía trên, ảnh phía dưới -->
+  <section class="two-up">
+    <article v-for="p in promos" :key="p.title" class="tile" @click="router.push(p.to)">
+      <div class="tile-text">
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.sub }}</p>
+        <span class="tile-link">Tìm hiểu thêm <i class="pi pi-angle-right" /></span>
       </div>
-    </div>
+      <div class="tile-img" :style="{ backgroundImage: 'url(' + p.img + ')' }" />
+    </article>
   </section>
 
   <!-- Cam kết dịch vụ (icon nhiều màu) -->
@@ -241,48 +246,44 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 </template>
 
 <style scoped>
-/* Hero full-bleed: nền xanh nhạt tràn hết chiều ngang (hết trắng 2 bên) */
-.hero { position: relative; margin-bottom: var(--sp-4); padding: var(--sp-5) 0; }
-.hero::before {
-  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0;
-  left: 50%; transform: translateX(-50%); width: 100vw;
-  background: linear-gradient(120deg, #eff5ff 0%, #dbe8ff 45%, #f3f7ff 100%);
+/* ===== Hero spotlight full-bleed (Apple-store style) — chữ căn giữa, chồng tầng ===== */
+.spot { position: relative; margin: 0 0 var(--sp-6); }
+.spot-carousel :deep(.p-carousel-indicator-list) { position: absolute; left: 0; right: 0; bottom: 16px; margin: 0; z-index: 2; }
+.spot-slide {
+  min-height: 520px; display: flex; align-items: flex-start; justify-content: center;
+  text-align: center; padding: var(--sp-8) var(--sp-4);
+  background-size: cover; background-position: center; background-color: var(--surface-2);
+  border-radius: var(--radius-lg); overflow: hidden; position: relative;
 }
-.hero-inner { display: grid; grid-template-columns: 1fr 320px; gap: var(--sp-3); align-items: stretch; }
-.hero-main { min-width: 0; }
-.banner-carousel { margin-bottom: 0; height: 100%; }
-.banner-carousel :deep(.p-carousel-content-container),
-.banner-carousel :deep(.p-carousel-content),
-.banner-carousel :deep(.p-carousel-viewport),
-.banner-carousel :deep(.p-carousel-item-list),
-.banner-carousel :deep(.p-carousel-item) { height: 100%; }
-.banner-carousel :deep(.p-carousel-content-container) { position: relative; }
-.banner-carousel :deep(.p-carousel-indicator-list) { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; z-index: 2; }
-.banner {
-  height: 340px; color: #fff; border-radius: var(--radius-lg); padding: var(--sp-8);
-  display: flex; align-items: center; position: relative; overflow: hidden;
-  background-color: var(--brand);            /* fallback nếu ảnh lỗi */
-  background-size: cover; background-position: center;
-}
-.banner-text { position: relative; z-index: 1; max-width: 60%; }
-.tagline { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.2); backdrop-filter: blur(2px); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-pill); margin-bottom: var(--sp-3); }
-.banner h1 { font-size: 2.1rem; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,.25); }
-.banner p { opacity: 0.95; margin-bottom: 18px; text-shadow: 0 1px 4px rgba(0,0,0,.25); }
-.cta { background: #fff; color: var(--brand); border: none; cursor: pointer; padding: 11px 24px; border-radius: var(--radius-pill); font-family: inherit; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow-md); transition: transform var(--ease); }
-.cta:hover { transform: translateY(-2px); }
+/* Lớp phủ trắng gradient để chữ tối nổi rõ trên ảnh (kiểu Apple sáng) */
+.spot-slide::before { content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55) 55%, rgba(255,255,255,.15)); }
+.spot-text { position: relative; z-index: 1; max-width: 760px; padding-top: var(--sp-5); }
+.eyebrow { display: block; color: var(--brand); font-size: 15px; font-weight: 600; margin-bottom: var(--sp-2); }
+.spot-text h1 { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 700; letter-spacing: -0.03em; color: var(--text); margin-bottom: var(--sp-3); line-height: 1.08; }
+.spot-text p { font-size: clamp(1rem, 1.6vw, 1.35rem); color: var(--text-2); margin-bottom: var(--sp-4); }
+.spot-links { display: inline-flex; gap: var(--sp-4); flex-wrap: wrap; justify-content: center; align-items: center; }
+.spot-link { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.05rem; color: var(--brand); font-weight: 500; transition: gap var(--ease); }
+.spot-link:hover { gap: 10px; text-decoration: underline; }
+.spot-link .pi { font-size: 12px; }
+.spot-link.primary { background: var(--brand); color: #fff; padding: 10px 24px; border-radius: var(--radius-pill); }
+.spot-link.primary:hover { background: var(--brand-dark); text-decoration: none; }
 
-/* 2 banner phụ */
-.hero-side { display: grid; grid-template-rows: 1fr 1fr; gap: var(--sp-3); }
-.promo {
+/* ===== Two-up band: 2 ô lớn chữ căn giữa trên, ảnh dưới (Apple two-tile) ===== */
+.two-up { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-bottom: var(--sp-6); }
+.tile {
   position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer;
-  background-size: cover; background-position: center; min-height: 142px;
-  display: flex; align-items: flex-end; padding: var(--sp-4); color: #fff;
-  transition: transform var(--ease), box-shadow var(--ease);
+  background: var(--surface-2); border: 1px solid var(--border);
+  min-height: 420px; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: var(--sp-6) var(--sp-4) 0; transition: box-shadow var(--ease), transform var(--ease);
 }
-.promo:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.promo-txt { display: flex; flex-direction: column; gap: 2px; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
-.promo-txt strong { font-size: 1.05rem; font-weight: 800; }
-.promo-txt span { font-size: 12.5px; opacity: 0.95; }
+.tile:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.tile-text { position: relative; z-index: 1; }
+.tile-text h3 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 6px; }
+.tile-text p { color: var(--text-2); margin-bottom: var(--sp-3); }
+.tile-link { display: inline-flex; align-items: center; gap: 5px; color: var(--brand); font-weight: 500; font-size: 1.05rem; }
+.tile-link .pi { font-size: 12px; }
+.tile-img { margin-top: auto; width: 100%; height: 210px; background-size: cover; background-position: center; }
 
 /* Dải cam kết dịch vụ — icon nhiều màu */
 .benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); margin-bottom: var(--sp-4); }
@@ -371,15 +372,13 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 
 @media (max-width: 900px) {
   .benefits { grid-template-columns: 1fr 1fr; }
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
-  .banner { height: 260px; }
-  .banner-text { max-width: 80%; }
+  .two-up { grid-template-columns: 1fr; }
+  .spot-slide { min-height: 440px; }
 }
 @media (max-width: 640px) {
-  .banner { padding: var(--sp-5); height: 200px; } .banner h1 { font-size: 1.5rem; }
-  .banner-text { max-width: 100%; }
-  .hero-side { grid-template-columns: 1fr; }
+  .spot-slide { min-height: 380px; padding: var(--sp-6) var(--sp-3); }
+  .tile { min-height: 340px; }
+  .tile-img { height: 170px; }
   .see-all { display: none; }
   .bt small { display: none; }
 }
