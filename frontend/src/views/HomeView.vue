@@ -40,12 +40,12 @@ const promos = [
   { title: 'Tra Cứu Bảo Hành', sub: 'Kiểm tra nhanh theo IMEI', img: 'https://picsum.photos/seed/phonestore-p2/640/320', to: '/warranty' }
 ]
 
-// Dải cam kết dịch vụ — icon nhiều màu, có chủ đích.
+// Dải cam kết dịch vụ — icon trung tính (Minimal Premium: 1 tông, không cầu vồng).
 const benefits = [
-  { icon: 'pi-truck', fg: 'var(--c-green)', bg: 'var(--c-green-bg)', title: 'Miễn phí vận chuyển', sub: 'Đơn từ 500.000đ' },
-  { icon: 'pi-verified', fg: 'var(--c-blue)', bg: 'var(--c-blue-bg)', title: 'Chính hãng 100%', sub: 'Bảo hành theo IMEI' },
-  { icon: 'pi-calendar', fg: 'var(--c-purple)', bg: 'var(--c-purple-bg)', title: 'Trả góp 0%', sub: 'Duyệt nhanh 15 phút' },
-  { icon: 'pi-shield', fg: 'var(--c-amber)', bg: 'var(--c-amber-bg)', title: 'Thanh toán an toàn', sub: 'Bảo mật VNPAY' }
+  { icon: 'pi-truck', fg: 'var(--text)', bg: 'var(--surface-2)', title: 'Miễn phí vận chuyển', sub: 'Đơn từ 500.000đ' },
+  { icon: 'pi-verified', fg: 'var(--text)', bg: 'var(--surface-2)', title: 'Chính hãng 100%', sub: 'Bảo hành theo IMEI' },
+  { icon: 'pi-calendar', fg: 'var(--text)', bg: 'var(--surface-2)', title: 'Trả góp 0%', sub: 'Duyệt nhanh 15 phút' },
+  { icon: 'pi-shield', fg: 'var(--text)', bg: 'var(--surface-2)', title: 'Thanh toán an toàn', sub: 'Bảo mật VNPAY' }
 ]
 
 // ----- Đồng hồ đếm ngược Flash Sale (đến thời điểm endAt của phiên) -----
@@ -222,7 +222,7 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
   </section>
 
   <!-- Gợi ý hôm nay -->
-  <div class="suggest-head"><span>MÁY NỔI BẬT</span></div>
+  <h2 class="suggest-head section-title">Máy nổi bật</h2>
   <div class="grid-products">
     <ProductCard v-for="p in feed" :key="p.id" :product="p" />
     <!-- Skeleton khi tải trang đầu hoặc nối trang tiếp theo (infinite scroll) -->
@@ -295,8 +295,8 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 .bt small { color: var(--text-muted); font-size: 11px; }
 
 .vouchers { margin-bottom: var(--sp-4); }
-.v-head, .flash-head { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-3); }
-.v-head h2, .flash-title { display: flex; align-items: center; gap: 8px; font-size: 1.1rem; font-weight: 800; margin: 0; }
+.v-head, .flash-head { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.v-head h2, .flash-title { display: flex; align-items: center; gap: 8px; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
 .v-head h2 .pi { color: var(--brand); }
 .see-all { margin-left: auto; color: var(--brand); font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; }
 .v-strip { display: flex; gap: var(--sp-3); overflow-x: auto; padding-bottom: 4px; }
@@ -311,24 +311,23 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 .v-save.saved { background: var(--surface-2); color: var(--text-muted); cursor: default; }
 
 /* Dải thương hiệu */
-.brands { margin-bottom: var(--sp-4); }
-.brands-title { font-size: 1rem; margin-bottom: var(--sp-4); }
+.brands { margin-bottom: var(--sp-6); }
+.brands-title { font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: var(--sp-4); }
 .brand-strip { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
 .brand-chip { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 18px; cursor: pointer; transition: all var(--ease); font-family: inherit; }
 .brand-chip:hover { border-color: var(--brand); box-shadow: var(--shadow); transform: translateY(-2px); }
 .brand-logo { height: 28px; width: auto; max-width: 60px; object-fit: contain; }
 .brand-name { font-size: 14px; font-weight: 600; color: var(--text); }
 
-.flash { margin-bottom: var(--sp-4); overflow: hidden; }
-/* Header flash-sale nổi bật: dải gradient xanh kéo hết mép thẻ */
-.flash-head { background: linear-gradient(90deg, var(--brand), var(--brand-light)); color: #fff;
-  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) var(--sp-4); padding: var(--sp-3) var(--sp-5); }
-.flash-head .flash-title { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.15); }
-.flash-title .pi { color: var(--star); }
-.flash-head .see-all { color: #fff; }
-.countdown { display: flex; align-items: center; gap: 4px; font-size: 13px; }
-.cd-label { color: rgba(255,255,255,.9); margin-right: 4px; }
-.cd-box { background: var(--text); color: #fff; padding: 2px 6px; border-radius: var(--radius-sm); font-weight: 700; font-variant-numeric: tabular-nums; }
+.flash { margin-bottom: var(--sp-6); overflow: hidden; }
+/* Minimal: header flash-sale sạch, viền hairline dưới (bỏ dải gradient xanh) */
+.flash-head { border-bottom: 1px solid var(--border);
+  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) var(--sp-5); padding: var(--sp-4) var(--sp-5); }
+.flash-head .flash-title { color: var(--text); font-size: 1.35rem; letter-spacing: -0.02em; }
+.flash-title .pi { color: var(--sale); }
+.countdown { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-2); }
+.cd-label { color: var(--text-muted); margin-right: 4px; }
+.cd-box { background: var(--text); color: #fff; padding: 2px 7px; border-radius: var(--radius-sm); font-weight: 700; font-variant-numeric: tabular-nums; }
 .flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--sp-3); }
 .flash-card { cursor: pointer; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease); }
 .flash-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--brand-100); }
@@ -354,8 +353,7 @@ onUnmounted(() => { clearInterval(timer); window.removeEventListener('scroll', o
 .fc-fill { position: absolute; inset: 0; background: linear-gradient(90deg, #ffab00, var(--brand)); border-radius: var(--radius-pill); }
 .fc-text { position: absolute; inset: 0; display: grid; place-items: center; font-size: 10px; color: #fff; font-weight: 600; text-shadow: 0 0 2px rgba(0,0,0,.3); }
 
-.suggest-head { text-align: center; margin: var(--sp-5) 0 var(--sp-4); }
-.suggest-head span { color: var(--brand); font-weight: 700; border-bottom: 3px solid var(--brand); padding-bottom: 8px; letter-spacing: 0.5px; }
+.suggest-head { margin: var(--sp-8) 0 var(--sp-5); }
 .center { display: flex; justify-content: center; padding: var(--sp-6); }
 .more { text-align: center; margin: var(--sp-4) 0 var(--sp-6); }
 
