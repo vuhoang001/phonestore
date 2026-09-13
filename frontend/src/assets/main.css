@@ -1,0 +1,294 @@
+/* =========================================================================
+   DESIGN TOKENS — nguồn chân lý duy nhất cho màu/khoảng cách/bo góc/đổ bóng.
+   Tông XANH công nghệ (tech-blue) cho cửa hàng điện thoại.
+   Mọi component nên dùng var(--token) thay vì hardcode. Xem frontend/CLAUDE.md.
+   ========================================================================= */
+:root {
+  /* Thương hiệu (xanh công nghệ, đồng bộ với src/theme.ts) */
+  --brand: #1e6fff;
+  --brand-dark: #1657cc;
+  --brand-light: #4d8bff;
+  --brand-50: #eff5ff;
+  --brand-100: #dbe8ff;
+
+  /* Màu chức năng */
+  --star: #ffb400;          /* sao đánh giá */
+  --price: #e8453c;         /* giá bán / sale (đỏ nổi bật) */
+  --success: #16a34a;
+  --ok: #16a34a;            /* còn hàng / hoàn tất */
+  --danger: #e8453c;
+  --sale: #e8453c;
+
+  /* Bảng màu phụ — CHỈ dùng cho ô danh mục, chip tiện ích, icon minh hoạ.
+     KHÔNG dùng cho CTA/giá (giữ xanh thương hiệu). Mỗi màu kèm nền nhạt. */
+  --c-red: #e8453c;    --c-red-bg: #fdecea;
+  --c-orange: #ff8f1f; --c-orange-bg: #fff6e9;
+  --c-amber: #f5a623;  --c-amber-bg: #fff8e8;
+  --c-green: #16a34a;  --c-green-bg: #e7f6ec;
+  --c-blue: #1e6fff;   --c-blue-bg: #eff5ff;
+  --c-purple: #7c5cfc; --c-purple-bg: #f0ecff;
+  --c-pink: #ff5c9d;   --c-pink-bg: #ffeef5;
+  --c-teal: #00b5b8;   --c-teal-bg: #e5f7f7;
+
+  /* Nền & bề mặt */
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #fafbfe;
+  --border: #e8ebf1;
+  --border-strong: #d5dae3;
+
+  /* Chữ */
+  --text: #1a2233;
+  --text-2: #55607a;
+  --text-muted: #929bb0;
+
+  /* Bo góc (medium) */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Đổ bóng — nhẹ, tinh tế, không "flat kiểu AI" */
+  --shadow-sm: 0 1px 2px rgba(20, 30, 60, 0.06);
+  --shadow: 0 2px 10px rgba(20, 30, 60, 0.08);
+  --shadow-md: 0 6px 20px rgba(20, 30, 60, 0.10);
+  --shadow-hover: 0 8px 24px rgba(20, 30, 60, 0.12);
+
+  /* Khoảng cách (dùng bội số 4px) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px;
+
+  /* Chuyển động */
+  --ease: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --container: 1200px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Be Vietnam Pro', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-tap-highlight-color: transparent;   /* bỏ flash xám khi chạm mobile */
+  overflow-x: clip;                           /* chặn tràn ngang do nền full-bleed 100vw; 'clip' không phá position:sticky */
+}
+
+/* Phân cấp bằng type: tiêu đề chặt chữ (letter-spacing âm nhẹ) cho cảm giác cao cấp */
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+h1 { letter-spacing: -0.02em; }
+
+a { text-decoration: none; color: inherit; }
+
+img { max-width: 100%; display: block; }
+
+/* Focus-visible thống nhất toàn site — vòng xanh mảnh, chỉ hiện khi dùng bàn phím.
+   Dấu hiệu UI cao cấp + accessible. Không đụng chuột (không :focus thường). */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+/* Bôi đen văn bản mang màu thương hiệu */
+::selection { background: var(--brand-100); color: var(--brand-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--sp-4); }
+.page { padding: var(--sp-5) 0 var(--sp-8); }
+
+/* Lưới sản phẩm chuẩn dùng chung */
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-3);
+}
+
+/* Tiện ích */
+.w-full { width: 100%; }
+.text-muted { color: var(--text-muted); }
+.price { color: var(--price); font-weight: 700; }
+.line-through { text-decoration: line-through; color: var(--text-muted); font-weight: 400; }
+.cursor-pointer { cursor: pointer; }
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.section-title::before {
+  content: '';
+  width: 4px; height: 20px;
+  background: var(--brand);
+  border-radius: var(--radius-pill);
+}
+
+/* Thẻ bề mặt chung — thay cho các "box" rời rạc trước đây.
+   Viền hairline + bóng nhẹ = nét gọn, có chiều sâu kiểu Vercel (không phẳng lì). */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-5);
+}
+
+/* Badge giảm giá góc sản phẩm */
+.sale-badge {
+  position: absolute; top: 0; right: 0;
+  background: var(--sale); color: #fff;
+  font-size: 11px; font-weight: 700;
+  padding: 2px 6px;
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+/* Nhãn "Đã bán / đánh giá" */
+.meta-row { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); }
+
+/* Scrollbar mảnh cho gọn */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #c8d0e0; border-radius: var(--radius-pill); border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: #aeb8cc; }
+
+/* =========================================================================
+   PLACEHOLDER — chữ gợi ý ở MỌI ô nhập nhỏ & nhạt hơn chữ nhập, đồng nhất toàn site.
+   `::placeholder` phủ mọi <input>/<textarea> thật (gồm cả PrimeVue InputText/Textarea/
+   InputNumber/Password vì bên trong đều là input thật). Select/MultiSelect dùng <span>
+   nên xử lý riêng qua `.p-placeholder`.
+   ========================================================================= */
+/* Chữ NHẬP 14px (bằng body). PrimeVue mặc định input = 1rem (16px) hơi to; dùng 2 lớp class
+   (.p-inputtext.p-component ...) để thắng đặc hiệu style PrimeVue — chạy cả khi Dialog teleport
+   ra ngoài #app, khỏi cần !important. */
+.p-inputtext.p-component, .p-textarea.p-component,
+.p-select .p-select-label, .p-multiselect .p-multiselect-label { font-size: 0.875rem; }
+/* Chữ GỢI Ý (placeholder) nhỏ & nhạt hơn chữ nhập, đồng nhất mọi ô. */
+::placeholder { font-size: 0.8rem; opacity: 1; color: var(--text-muted); }
+.p-select .p-select-label.p-placeholder,
+.p-multiselect .p-multiselect-label.p-placeholder { font-size: 0.8rem; color: var(--text-muted); }
+
+/* =========================================================================
+   DIALOG / OVERLAY POLISH — áp cho MỌI Dialog, ConfirmDialog toàn site.
+   Bo góc mềm + bóng sâu đã set ở theme.ts; phần này lo CẤU TRÚC mà token
+   không có: tách vùng header/footer, nền mờ blur, hover nút đóng, hiệu ứng mở.
+   ========================================================================= */
+
+/* Nền mờ phía sau: làm mờ nhẹ để nội dung dialog nổi bật, tập trung hơn */
+.p-dialog-mask.p-overlay-mask { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+
+/* Clip nội dung theo bo góc để vùng footer nền nhạt không lòi góc vuông */
+.p-dialog { overflow: hidden; }
+
+/* Header: đường kẻ mảnh tách tiêu đề khỏi nội dung — phân cấp rõ ràng */
+.p-dialog .p-dialog-header { border-bottom: 1px solid var(--border); }
+
+/* Footer: nền nhạt + kẻ trên → "vùng hành động" tách biệt, nút dồn phải nhất quán */
+.p-dialog .p-dialog-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-5);
+}
+
+/* Nút đóng (X): hover tô nền xanh nhạt cho phản hồi rõ, đúng tông thương hiệu */
+.p-dialog .p-dialog-close-button { transition: background var(--ease), color var(--ease); }
+.p-dialog .p-dialog-close-button:hover { background: var(--brand-50); color: var(--brand); }
+
+/* Hiệu ứng mở: mượt, nhẹ nhàng (fade + nhích lên) thay vì bật cứng */
+.p-dialog-enter-active { transition: transform var(--ease), opacity var(--ease); }
+.p-dialog-enter-from { opacity: 0; transform: translateY(12px) scale(0.98); }
+
+/* ConfirmDialog: icon cảnh báo đặt trong vòng tròn tô nhạt cho gọn, dễ nhìn */
+.p-confirmdialog .p-confirmdialog-icon {
+  font-size: 1.15rem;
+  color: var(--brand);
+  background: var(--brand-50);
+  width: 2.5rem; height: 2.5rem;
+  border-radius: var(--radius-pill);
+  display: inline-grid; place-items: center;
+  flex-shrink: 0;
+}
+.p-confirmdialog .p-confirmdialog-message { align-self: center; line-height: 1.5; }
+
+/* Toast: bóng sâu hơn cho tách nền, đồng bộ độ mềm với dialog */
+.p-toast .p-toast-message { box-shadow: var(--shadow-md); }
+
+/* =========================================================================
+   RESPONSIVE GLOBAL — áp cho MỌI trang. Breakpoint chuẩn:
+     --bp-md 900px (tablet)  ·  --bp-sm 640px (mobile)  ·  --bp-xs 420px
+   Xử lý sẵn: Dialog tràn màn, DataTable cuộn ngang, lưới sản phẩm co cột,
+   padding trang. Nhờ vậy component riêng chỉ cần lo layout đặc thù.
+   ========================================================================= */
+
+/* Bảng (DataTable) luôn cuộn ngang thay vì vỡ layout trên mobile */
+.p-datatable-table-container,
+.p-datatable-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+@media (max-width: 900px) {
+  .page { padding: var(--sp-4) 0 var(--sp-6); }
+  .surface-card { padding: var(--sp-4); }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 13.5px; }
+  .container { padding: 0 var(--sp-3); }
+  .section-title { font-size: 1.05rem; }
+
+  /* Lưới sản phẩm: luôn 2 cột trên điện thoại cho gọn, đẹp */
+  .grid-products { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
+
+  /* Mọi Dialog PrimeVue: vừa khít màn hình, không tràn ngang */
+  .p-dialog { width: 95vw !important; max-width: 95vw !important; margin: 0; }
+  .p-dialog .p-dialog-content { max-height: 75vh; }
+}
+
+@media (max-width: 420px) {
+  .grid-products { grid-template-columns: 1fr; }
+}
+
+/* ---- Report tab shared classes ---- */
+.rp-box { background: var(--surface); border-radius: var(--radius-lg); padding: var(--sp-4); margin-bottom: var(--sp-3); }
+.rp-box h3 { margin: 0 0 var(--sp-3); font-size: 1rem; }
+.rp-box h3 .pi { color: var(--brand); margin-right: 6px; }
+.rp-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-3); }
+.rp-head h3 { margin: 0; }
+.rp-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-3); }
+.rp-kpi { background: var(--surface); border-radius: var(--radius-lg); padding: var(--sp-4); }
+.rp-kpi span { color: var(--text-muted); font-size: 12px; display: block; margin-bottom: 2px; }
+.rp-kpi strong { font-size: 1.15rem; }
+.rp-kpi.good strong { color: var(--success); }
+.rp-kpi.bad strong { color: var(--brand); }
+.rp-chart { height: 260px; }
+.rp-chart-sm { height: 210px; }
+.rp-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.rp-empty { padding: var(--sp-5); text-align: center; color: var(--text-muted); }
+@media (max-width: 900px) { .rp-grid2 { grid-template-columns: 1fr; } }
+
+/* ---- Drill-down dùng chung cho mọi tab báo cáo ---- */
+.drillable { cursor: pointer; border: 1px solid transparent; transition: border-color var(--ease), background var(--ease); }
+.drillable:hover { border-color: var(--brand); background: var(--brand-50); }
+.drillable span .pi, .drillable > .pi { font-size: 10px; opacity: 0; transition: opacity var(--ease); }
+.drillable:hover span .pi, .drillable:hover > .pi { opacity: 0.7; }
+.drill-table .p-datatable-tbody > tr { cursor: pointer; }
+.drill-hint { display: flex; align-items: center; gap: 6px; margin: var(--sp-2) 0 0; font-size: 11.5px; color: var(--text-muted); }
+.drill-hint .pi { font-size: 11px; }
+.drill-load { display: flex; align-items: center; gap: 8px; padding: var(--sp-5); color: var(--text-muted); justify-content: center; }
+.drill-sum { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-4); flex-wrap: wrap; margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--border); font-size: 14px; }
+.drill-sum strong { color: var(--price); }
+.drill-sum .pt { color: var(--text-2); font-size: 13px; } .drill-sum .pt b { color: var(--text); }
+.good-t { color: var(--success); }
+/* Link mã đơn / tên SP trong báo cáo */
+.rp-link { color: var(--brand); cursor: pointer; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.rp-link:hover { text-decoration: underline; }
+.rp-link .pi { font-size: 10px; opacity: .6; }
