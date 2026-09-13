@@ -1,6 +1,6 @@
 # PhoneStore Frontend — Design System (bắt buộc đọc trước khi sửa UI)
 
-Tông thương hiệu **xanh công nghệ** (tech-blue) cho cửa hàng điện thoại — hiện đại, sạch, cao cấp theo tinh thần Vercel/v0. Mọi `.vue`/CSS phải tuân theo file này.
+Phong cách **MINIMAL PREMIUM (Apple-like)**: nhiều khoảng trắng, xám trung tính, viền hairline, bóng khuếch tán rất nhẹ, bo góc lớn, typography to & chặt chữ, **một** màu nhấn xanh Apple dùng **rất dè** (chỉ CTA/link/tiêu điểm). Header là thanh **kính mờ trắng** (frosted). Giá hiển thị màu **neutral** (near-black), đỏ CHỈ dành cho badge giảm giá. Mọi `.vue`/CSS phải tuân theo file này.
 
 ## Nguyên tắc vàng
 1. **Luôn dùng design token** (CSS variables) — KHÔNG hardcode màu/padding/radius/shadow.
@@ -14,28 +14,28 @@ Tông thương hiệu **xanh công nghệ** (tech-blue) cho cửa hàng điện 
 ## Color tokens (đặt trong `:root`)
 ```css
 :root {
-  --brand: #1e6fff;         /* xanh công nghệ chủ đạo */
-  --brand-dark: #1657cc;
-  --brand-light: #4d8bff;
-  --brand-50: #eff5ff;      /* nền nhạt */
-  --brand-100: #dbe8ff;
-  --price: #e8453c;         /* giá/sale màu đỏ nổi bật */
-  --sale: #e8453c;
-  --star: #ffb400;          /* sao đánh giá */
-  --ok: #16a34a;            /* còn hàng / hoàn tất */
-  --bg: #f4f6fb;            /* nền trang */
+  --brand: #0071e3;         /* xanh Apple — màu nhấn duy nhất, dùng dè */
+  --brand-dark: #0056b3;
+  --brand-light: #3898ec;
+  --brand-50: #f0f7ff;      /* nền nhạt */
+  --brand-100: #dbeafe;
+  --price: #1d1d1f;         /* giá: neutral tự tin (KHÔNG đỏ) */
+  --sale: #e0402f;          /* đỏ CHỈ cho badge giảm giá */
+  --star: #f5a623;          /* sao đánh giá */
+  --ok: #1d8a4e;            /* còn hàng / hoàn tất */
+  --bg: #f5f5f7;            /* nền trang (xám Apple) */
   --surface: #ffffff;
-  --surface-2: #fafbfe;
-  --border: #e8ebf1;
-  --border-strong: #d5dae3;
-  --text: #1a2233;
-  --text-2: #55607a;
-  --text-muted: #929bb0;
-  --radius-sm: 8px; --radius: 12px; --radius-lg: 16px;
-  --shadow-sm: 0 1px 2px rgba(20,30,60,.06);
-  --shadow: 0 2px 10px rgba(20,30,60,.08);
-  --shadow-hover: 0 8px 24px rgba(20,30,60,.12);
-  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px; --sp-8:32px;
+  --surface-2: #fbfbfd;
+  --border: #e5e5ea;        /* hairline trung tính */
+  --border-strong: #d2d2d7;
+  --text: #1d1d1f;          /* near-black trung tính */
+  --text-2: #4b4f58;
+  --text-muted: #86868b;    /* xám Apple */
+  --radius-sm: 10px; --radius: 14px; --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+  --shadow: 0 4px 16px rgba(0,0,0,.06);
+  --shadow-hover: 0 14px 36px rgba(0,0,0,.10);
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:18px; --sp-5:24px; --sp-6:32px; --sp-8:48px;
 }
 ```
 

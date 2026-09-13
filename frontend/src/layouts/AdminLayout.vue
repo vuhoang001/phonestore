@@ -87,26 +87,28 @@ watch(() => route.name, () => { sidebarOpen.value = false })
 <style scoped>
 .admin-shell { display: flex; min-height: 100vh; }
 
+/* Minimal Premium: sidebar sáng, viền hairline, mục active = highlight bo tròn xanh nhạt */
 .sidebar {
-  width: 240px; background: #131a2b; color: #e5e7eb;
-  display: flex; flex-direction: column; padding: var(--sp-4) 0;
-  flex-shrink: 0;
-  /* Ghim sidebar theo viewport khi cuộn nội dung (giống filter trang sản phẩm). */
+  width: 244px; background: var(--surface); color: var(--text-2);
+  display: flex; flex-direction: column; padding: var(--sp-4) var(--sp-2);
+  flex-shrink: 0; border-right: 1px solid var(--border);
+  /* Ghim sidebar theo viewport khi cuộn nội dung. */
   position: sticky; top: 0;
   align-self: flex-start;
   height: 100vh; overflow-y: auto;
 }
-.brand { display: flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 800; padding: var(--sp-2) var(--sp-5) var(--sp-5); color: #fff; }
-.brand .pi { color: var(--brand-light); }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; padding: var(--sp-2) var(--sp-3) var(--sp-5); color: var(--text); }
+.brand .pi { color: var(--brand); }
 .nav-item {
   display: flex; align-items: center; gap: 12px; width: 100%;
-  background: none; border: none; color: #c9ccd3; padding: 12px var(--sp-5);
-  cursor: pointer; font-size: 0.95rem; font-family: inherit; text-align: left;
-  border-left: 3px solid transparent; transition: all var(--ease);
+  background: none; border: none; color: var(--text-2); padding: 10px var(--sp-3);
+  cursor: pointer; font-size: 0.9rem; font-family: inherit; text-align: left;
+  border-radius: var(--radius); margin-bottom: 2px; transition: all var(--ease);
 }
-.nav-item:hover { background: #1c2740; color: #fff; }
-.nav-item.active { background: rgba(30, 111, 255, 0.16); color: #fff; border-left-color: var(--brand-light); }
-.sidebar-footer { margin-top: auto; padding: var(--sp-4) var(--sp-3); }
+.nav-item i { font-size: 1rem; }
+.nav-item:hover { background: var(--surface-2); color: var(--text); }
+.nav-item.active { background: var(--brand-50); color: var(--brand); font-weight: 600; }
+.sidebar-footer { margin-top: auto; padding: var(--sp-4) var(--sp-2) var(--sp-2); }
 
 .admin-main { flex: 1; display: flex; flex-direction: column; background: var(--bg); min-width: 0; }
 .admin-header {
