@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<IDashboardService, DashboardService>();
         services.AddScoped<IReportService, ReportService>();
+        services.AddScoped<IAdvancedReportService, AdvancedReportService>();
         services.AddScoped<IWarrantyService, WarrantyService>();
         services.AddScoped<ITradeInService, TradeInService>();
         services.AddScoped<IAuditLogger, AuditLogger>();
