@@ -283,7 +283,7 @@ watch(() => route.query, (q) => {
 </template>
 
 <style scoped>
-.toolbar-top { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); background: var(--surface); padding: var(--sp-3) var(--sp-4); border-radius: var(--radius); }
+.toolbar-top { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); background: var(--surface); border: 1px solid var(--border); padding: var(--sp-3) var(--sp-4); border-radius: var(--radius); }
 .total-txt { color: var(--text-muted); font-size: 14px; }
 .toolbar-top .filter-toggle { display: none; }
 .total-txt + :deep(.p-select) { margin-left: auto; }
@@ -293,8 +293,8 @@ watch(() => route.query, (q) => {
 .chip .pi { cursor: pointer; font-size: 11px; }
 .clear-all { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; text-decoration: underline; }
 
-.layout { display: grid; grid-template-columns: 230px 1fr; gap: var(--sp-4); align-items: start; }
-.filters { background: var(--surface); border-radius: var(--radius-lg); padding: var(--sp-4); position: sticky; top: 84px; }
+.layout { display: grid; grid-template-columns: 250px 1fr; gap: var(--sp-5); align-items: start; }
+.filters { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--sp-5); position: sticky; top: 76px; }
 .f-group { padding-bottom: var(--sp-4); margin-bottom: var(--sp-4); border-bottom: 1px solid var(--border); }
 .f-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .f-group h4 { margin: 0 0 var(--sp-3); font-size: 14px; }
