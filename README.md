@@ -16,7 +16,8 @@ Hệ thống thương mại điện tử chuyên **điện thoại & phụ kiệ
 ```bash
 cp .env.example .env   # điền secret nếu cần
 docker compose up -d --build
-# web: http://localhost:5173 · api: http://localhost:8080/swagger
+# web: http://localhost:5174 · api: http://localhost:8081/swagger
+# (DB 5433 · MinIO 9002/9003 — đổi cổng để chạy song song dự án 'hai')
 ```
 Tài khoản demo: `admin@phone.com` / `Admin@123`.
 

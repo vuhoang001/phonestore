@@ -10,16 +10,17 @@ export default defineConfig({
     }
   },
   server: {
-    port: 5173,
+    // Cổng riêng để chạy song song với dự án 'hai' (5173)
+    port: 5174,
     proxy: {
       // Chuyển tiếp gọi API sang backend khi chạy dev
       '/api': {
-        target: process.env.VITE_API_TARGET || 'http://localhost:8080',
+        target: process.env.VITE_API_TARGET || 'http://localhost:8081',
         changeOrigin: true
       },
       // SignalR hub — bật ws để proxy WebSocket khi chạy dev
       '/hubs': {
-        target: process.env.VITE_API_TARGET || 'http://localhost:8080',
+        target: process.env.VITE_API_TARGET || 'http://localhost:8081',
         changeOrigin: true,
         ws: true
       }

@@ -6,7 +6,7 @@
 Mọi thay đổi UI/CSS/`.vue` **PHẢI** tuân theo **[`frontend/CLAUDE.md`](frontend/CLAUDE.md)** — design system (tông **xanh công nghệ**, dùng design token, chống "AI-look"). Đọc file đó trước khi sửa giao diện.
 
 ## Chạy dự án
-- Toàn bộ: `docker compose up -d --build` → web http://localhost:5173 · api http://localhost:8080/swagger
+- Toàn bộ: `docker compose up -d --build` → web http://localhost:5174 · api http://localhost:8081/swagger (DB 5433 · MinIO 9002/9003 — cổng riêng để chạy song song dự án `hai`)
 - Sau khi sửa frontend, verify: `cd frontend && npm run build`; rebuild container: `docker compose up -d --build web`
 - Máy này **chưa cài dotnet** → backend chỉ build/verify qua Docker (`docker compose build api`).
 - Tài khoản demo: `admin@phone.com`/`Admin@123` · `customer@phone.com`/`Customer@123`

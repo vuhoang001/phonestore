@@ -8,7 +8,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: phonestore
     ports:
-      - "5432:5432"
+      # Đổi cổng host để chạy song song với dự án 'hai' (5433 host → 5432 trong container)
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -26,8 +27,8 @@ services:
       MINIO_ROOT_USER: "${MINIO_USER:-minioadmin}"
       MINIO_ROOT_PASSWORD: "${MINIO_PASSWORD:-minioadmin}"
     ports:
-      - "9000:9000"   # API (ảnh phục vụ tại http://localhost:9000/<bucket>/<file>)
-      - "9001:9001"   # Console quản trị
+      - "9002:9000"   # API (ảnh phục vụ tại http://localhost:9002/<bucket>/<file>)
+      - "9003:9001"   # Console quản trị
     volumes:
       - minio_data:/data
     healthcheck:
@@ -51,7 +52,7 @@ services:
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=phonestore;Username=postgres;Password=postgres"
       # MinIO — Endpoint nội bộ (container), PublicEndpoint để trình duyệt tải ảnh
       Minio__Endpoint: "minio:9000"
-      Minio__PublicEndpoint: "${MINIO_PUBLIC_URL:-http://localhost:9000}"
+      Minio__PublicEndpoint: "${MINIO_PUBLIC_URL:-http://localhost:9002}"
       Minio__AccessKey: "${MINIO_USER:-minioadmin}"
       Minio__SecretKey: "${MINIO_PASSWORD:-minioadmin}"
       Minio__Bucket: "phonestore"
@@ -60,8 +61,8 @@ services:
       Jwt__Secret: "${JWT_SECRET:-CHANGE_ME_super_secret_key_at_least_32_chars_long_1234567890}"
       Jwt__Issuer: "PhoneStoreAPI"
       Jwt__Audience: "PhoneStoreClient"
-      Cors__Origins__0: "http://localhost:5173"
-      Cors__Origins__1: "http://localhost:8080"
+      Cors__Origins__0: "http://localhost:5174"
+      Cors__Origins__1: "http://localhost:8081"
       # Tài khoản admin bootstrap — nên đặt qua biến môi trường/secret, không commit mật khẩu thật
       Seed__Admin__Email: "${ADMIN_EMAIL:-admin@phone.com}"
       Seed__Admin__Password: "${ADMIN_PASSWORD:-Admin@123}"
@@ -69,9 +70,9 @@ services:
       VnPay__TmnCode: "${VNPAY_TMNCODE:-YOUR_TMNCODE}"
       VnPay__HashSecret: "${VNPAY_HASHSECRET:-YOUR_HASHSECRET}"
       VnPay__BaseUrl: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
-      VnPay__ReturnUrl: "http://localhost:8080/api/payments/vnpay/return"
-      VnPay__FrontendReturnUrl: "http://localhost:5173/payment/result"
-      VnPay__MockUrl: "http://localhost:5173/payment/mock"
+      VnPay__ReturnUrl: "http://localhost:8081/api/payments/vnpay/return"
+      VnPay__FrontendReturnUrl: "http://localhost:5174/payment/result"
+      VnPay__MockUrl: "http://localhost:5174/payment/mock"
       # Tự hủy đơn chưa thanh toán sau X giờ, quét mỗi Y phút
       Orders__PaymentExpiryHours: "${ORDER_EXPIRY_HOURS:-24}"
       Orders__ExpiryScanMinutes: "${ORDER_SCAN_MINUTES:-15}"
@@ -84,9 +85,9 @@ services:
       Email__FromEmail: "${SMTP_USER}"
       Email__Username: "${SMTP_USER}"
       Email__Password: "${SMTP_PASS}"
-      Email__AppBaseUrl: "http://localhost:5173"
+      Email__AppBaseUrl: "http://localhost:5174"
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       # Ảnh user upload lưu local & bền qua rebuild
       - uploads_data:/app/wwwroot/uploads/user
@@ -99,7 +100,7 @@ services:
     depends_on:
       - api
     ports:
-      - "5173:80"
+      - "5174:80"
 
 volumes:
   pgdata:
