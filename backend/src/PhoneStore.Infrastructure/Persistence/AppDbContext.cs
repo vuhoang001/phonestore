@@ -40,6 +40,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<SearchLog> SearchLogs => Set<SearchLog>();
     public DbSet<FlashSale> FlashSales => Set<FlashSale>();
     public DbSet<FlashSaleItem> FlashSaleItems => Set<FlashSaleItem>();
+    public DbSet<InstallmentPayment> InstallmentPayments => Set<InstallmentPayment>();
 
     public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         => await Database.BeginTransactionAsync(cancellationToken);
@@ -87,6 +88,10 @@ public class AppDbContext : DbContext, IAppDbContext
 
         b.Entity<Order>().HasOne(o => o.Payment).WithOne(p => p.Order)
             .HasForeignKey<Payment>(p => p.OrderId).OnDelete(DeleteBehavior.Cascade);
+
+        b.Entity<InstallmentPayment>()
+            .HasOne(i => i.Order).WithMany(o => o.InstallmentPayments)
+            .HasForeignKey(i => i.OrderId).OnDelete(DeleteBehavior.Cascade);
 
         b.Entity<WarrantyRecord>()
             .HasOne(w => w.OrderItem).WithMany()

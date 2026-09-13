@@ -30,4 +30,6 @@ public class Order : BaseEntity
     public ICollection<OrderStatusHistory> StatusHistory { get; set; } = new List<OrderStatusHistory>();
     public Payment? Payment { get; set; }
     public ICollection<OrderCoupon> OrderCoupons { get; set; } = new List<OrderCoupon>();
+    /// <summary>Lịch trả góp hàng tháng (chỉ có khi đơn mua trả góp).</summary>
+    public ICollection<InstallmentPayment> InstallmentPayments { get; set; } = new List<InstallmentPayment>();
 }

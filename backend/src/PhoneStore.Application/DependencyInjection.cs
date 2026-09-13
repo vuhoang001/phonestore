@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<ITradeInService, TradeInService>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddScoped<IFlashSaleService, FlashSaleService>();
+        services.AddScoped<IInstallmentService, InstallmentService>();
         return services;
     }
 }

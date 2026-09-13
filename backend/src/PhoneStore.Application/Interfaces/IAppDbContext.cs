@@ -36,6 +36,7 @@ public interface IAppDbContext
     DbSet<SearchLog> SearchLogs { get; }
     DbSet<FlashSale> FlashSales { get; }
     DbSet<FlashSaleItem> FlashSaleItems { get; }
+    DbSet<InstallmentPayment> InstallmentPayments { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     /// <summary>Mở transaction để gom nhiều thao tác ghi thành nguyên tử (atomic).</summary>

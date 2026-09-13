@@ -148,6 +148,22 @@ public class OrderService : IOrderService
             Status = PaymentStatus.Pending
         };
 
+        // Sinh lịch trả góp hàng tháng khi khách chọn trả góp (mock 0% lãi — chia đều, kỳ cuối gánh phần lẻ).
+        if (installmentMonths is int nMonths && installmentMonthly is decimal perMonth)
+        {
+            var baseDate = DateTime.UtcNow;
+            for (var k = 1; k <= nMonths; k++)
+            {
+                order.InstallmentPayments.Add(new InstallmentPayment
+                {
+                    InstallmentNo = k,
+                    DueDate = baseDate.AddMonths(k),
+                    Amount = k < nMonths ? perMonth : total - perMonth * (nMonths - 1),
+                    Status = InstallmentStatus.Pending
+                });
+            }
+        }
+
         if (coupon != null)
         {
             coupon.UsedCount++;

@@ -33,6 +33,14 @@ public enum PaymentMethod
     Installment = 2   // Trả góp qua công ty tài chính (mock)
 }
 
+/// <summary>Trạng thái một kỳ trả góp hàng tháng.</summary>
+public enum InstallmentStatus
+{
+    Pending = 0,   // Chờ trả (chưa đến hạn, hoặc đến hạn nhưng chưa trả)
+    Paid = 1,      // Đã trả
+    Overdue = 2    // Quá hạn (thường tính lúc đọc: chưa trả & quá ngày đến hạn)
+}
+
 /// <summary>Trạng thái giao dịch thanh toán.</summary>
 public enum PaymentStatus
 {

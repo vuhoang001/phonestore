@@ -18,6 +18,8 @@ const routes = [
       { path: 'wishlist', name: 'wishlist', component: () => import('@/views/WishlistView.vue'), meta: { requiresAuth: true } },
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue'), meta: { requiresAuth: true } },
       { path: 'account', name: 'account', component: () => import('@/views/AccountView.vue'), meta: { requiresAuth: true } },
+      // Trả góp hàng tháng của khách (đặc thù điện thoại)
+      { path: 'installments', name: 'installments', component: () => import('@/views/InstallmentsView.vue'), meta: { requiresAuth: true } },
       // Tra cứu bảo hành theo IMEI/mã đơn (công khai — đặc thù điện thoại)
       { path: 'warranty', name: 'warranty-lookup', component: () => import('@/views/WarrantyLookupView.vue') },
       // Thu cũ đổi mới

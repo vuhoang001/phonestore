@@ -2,7 +2,7 @@ import api from './api'
 import type {
   AuthResponse, User, Category, Brand, ProductDetail, ProductListItem, PagedResult,
   Cart, Address, Order, Review, Coupon, WishlistItem, ShippingMethod, DashboardStats,
-  NotificationList, FlashSale, Warranty, WarrantyLookupResult, TradeIn
+  NotificationList, FlashSale, Warranty, WarrantyLookupResult, TradeIn, InstallmentPlan
 } from '@/types'
 import type {
   ReportSummary, RevenueReport, TopProductReport, CategoryRevenue,
@@ -175,6 +175,14 @@ export const tradeInApi = {
   // Admin đổi trạng thái (status truyền qua query).
   updateStatus: (id: number, status: string) =>
     api.put<TradeIn>(`/trade-in/${id}/status`, null, { params: { status } }).then((r) => r.data)
+}
+
+// ---------- Trả góp hàng tháng (Installment) ----------
+export const installmentApi = {
+  // Lịch trả góp của tất cả đơn trả góp của tôi.
+  mine: () => api.get<InstallmentPlan[]>('/installments/mine').then((r) => r.data),
+  // Thanh toán 1 kỳ (mock) → trả về lịch cập nhật của đơn đó.
+  pay: (id: number) => api.post<InstallmentPlan>(`/installments/${id}/pay`).then((r) => r.data)
 }
 
 // ---------- Review ----------

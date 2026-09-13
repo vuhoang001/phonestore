@@ -287,6 +287,31 @@ public static class DbSeeder
                 : status == OrderStatus.Cancelled ? PaymentStatus.Failed : PaymentStatus.Pending;
             order.Payment = new Payment { Method = method, Amount = total, Status = payStatus, PaidAt = payStatus == PaymentStatus.Paid ? t : null, CreatedAt = createdAt };
 
+            // Lịch trả góp: sinh N kỳ, trả TUẦN TỰ tới số kỳ đã đến hạn (đơn hoàn tất trả đủ,
+            // đơn khác đôi khi còn 1 kỳ quá hạn) → có sẵn dữ liệu Paid/Pending/Overdue để test.
+            if (installMonths is int im && installMonthly is decimal pm)
+            {
+                var dueCount = 0;
+                for (var k = 1; k <= im; k++) if (createdAt.AddMonths(k) <= DateTime.UtcNow) dueCount++;
+                var paidCount = status == OrderStatus.Completed
+                    ? dueCount
+                    : Math.Max(0, dueCount - (rnd.NextDouble() < 0.5 ? 1 : 0));
+                for (var k = 1; k <= im; k++)
+                {
+                    var due = createdAt.AddMonths(k);
+                    var paid = k <= paidCount;
+                    order.InstallmentPayments.Add(new InstallmentPayment
+                    {
+                        InstallmentNo = k,
+                        DueDate = due,
+                        Amount = k < im ? pm : total - pm * (im - 1),
+                        Status = paid ? InstallmentStatus.Paid : InstallmentStatus.Pending,
+                        PaidAt = paid ? due.AddDays(rnd.Next(0, 3)) : null,
+                        CreatedAt = createdAt
+                    });
+                }
+            }
+
             // Đặc thù điện thoại: khi đã Shipping/Completed thì gán IMEI + tạo phiếu bảo hành.
             if (status == OrderStatus.Shipping || status == OrderStatus.Completed)
             {

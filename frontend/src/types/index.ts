@@ -388,3 +388,16 @@ export interface FlashSaleRow {
   unitsSold: number; revenue: number; discount: number; running: boolean
 }
 export interface FlashSaleReport { programs: number; unitsSold: number; revenue: number; discountGiven: number; items: FlashSaleRow[] }
+
+// ---------- Trả góp hàng tháng (Installment repayment) ----------
+export interface InstallmentPaymentItem {
+  id: number; installmentNo: number; dueDate: string; amount: number
+  status: string; paidAt?: string; payable: boolean   // status: Paid | Overdue | Pending
+}
+export interface InstallmentPlan {
+  orderId: number; orderCode: string; orderDate: string
+  total: number; months: number; monthly: number
+  paidCount: number; paidAmount: number; remainingAmount: number
+  nextDueDate?: string; completed: boolean
+  payments: InstallmentPaymentItem[]
+}

@@ -20,6 +20,7 @@ const userMenu = ref()
 const menuItems = ref([
   { label: 'Tài khoản', icon: 'pi pi-user', command: () => router.push('/account') },
   { label: 'Đơn hàng của tôi', icon: 'pi pi-box', command: () => router.push('/orders') },
+  { label: 'Trả góp của tôi', icon: 'pi pi-calendar', command: () => router.push('/installments') },
   { label: 'Yêu thích', icon: 'pi pi-heart', command: () => router.push('/wishlist') },
   { separator: true },
   { label: 'Đăng xuất', icon: 'pi pi-sign-out', command: logout }
