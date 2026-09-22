@@ -9,6 +9,8 @@ const routes = [
       { path: '', name: 'home', component: () => import('@/views/HomeView.vue') },
       { path: 'products', name: 'products', component: () => import('@/views/ProductListView.vue') },
       { path: 'products/:slug', name: 'product-detail', component: () => import('@/views/ProductDetailView.vue') },
+      // So sánh máy (đặc thù điện thoại — công khai): danh sách máy lấy từ store compare
+      { path: 'compare', name: 'compare', component: () => import('@/views/CompareView.vue') },
       { path: 'cart', name: 'cart', component: () => import('@/views/CartView.vue') },
       { path: 'checkout', name: 'checkout', component: () => import('@/views/CheckoutView.vue'), meta: { requiresAuth: true } },
       { path: 'orders', name: 'orders', component: () => import('@/views/OrderHistoryView.vue'), meta: { requiresAuth: true } },
@@ -54,6 +56,8 @@ const routes = [
       { path: 'shipping', name: 'admin-shipping', component: () => import('@/views/admin/ShippingManageView.vue') },
       { path: 'coupons', name: 'admin-coupons', component: () => import('@/views/admin/CouponManageView.vue') },
       { path: 'flash-sale', name: 'admin-flash-sale', component: () => import('@/views/admin/FlashSaleManageView.vue') },
+      // Quản lý Thu cũ đổi mới (định giá + duyệt yêu cầu)
+      { path: 'trade-in', name: 'admin-trade-in', component: () => import('@/views/admin/TradeInManageView.vue') },
       { path: 'audit-logs', name: 'admin-audit', component: () => import('@/views/admin/AuditLogView.vue') }
     ]
   },

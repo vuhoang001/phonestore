@@ -5,6 +5,7 @@ import { useToast } from 'primevue/usetoast'
 import type { ProductListItem } from '@/types'
 import { formatCurrency } from '@/composables/format'
 import { useAuthStore } from '@/stores/auth'
+import { useCompareStore } from '@/stores/compare'
 import { wishlistApi } from '@/services'
 
 // ProductListItem (từ /products) mang giá rẻ nhất trong basePrice (backend đã tính từ biến thể).
@@ -14,7 +15,20 @@ const props = defineProps<{ product: ProductListItem; installmentAvailable?: boo
 const router = useRouter()
 const toast = useToast()
 const auth = useAuthStore()
+const compare = useCompareStore()
 const placeholder = 'https://placehold.co/300x300/f4f6fb/c8d0e0?text=No+Image'
+
+// So sánh máy: bật/tắt sản phẩm khỏi danh sách so sánh (tối đa MAX máy).
+const inCompare = computed(() => compare.has(props.product.id))
+function toggleCompare(e: Event) {
+  e.stopPropagation()
+  const r = compare.toggle(props.product)
+  if (r.full) {
+    toast.add({ severity: 'warn', summary: 'Đã đủ máy so sánh', detail: `Chỉ so sánh tối đa ${compare.MAX} máy. Hãy bỏ bớt trước.`, life: 2500 })
+  } else if (r.added) {
+    toast.add({ severity: 'success', summary: 'Đã thêm vào so sánh', detail: props.product.name, life: 1800 })
+  }
+}
 
 const liked = ref(false)
 // Nhãn suy ra từ dữ liệu thật (không bịa % giảm giá).
@@ -58,6 +72,13 @@ async function toggleWish(e: Event) {
       <!-- Nút yêu thích (hiện khi hover) -->
       <button class="wish" :class="{ on: liked }" @click.stop="toggleWish" aria-label="Yêu thích">
         <i class="pi" :class="liked ? 'pi-heart-fill' : 'pi-heart'" />
+      </button>
+
+      <!-- Nút So sánh (hiện khi hover / khi đã chọn) -->
+      <button class="cmp-btn" :class="{ on: inCompare }" @click.stop="toggleCompare"
+        :aria-label="inCompare ? 'Bỏ so sánh' : 'Thêm vào so sánh'"
+        :title="inCompare ? 'Bỏ khỏi so sánh' : 'So sánh máy'">
+        <i class="pi" :class="inCompare ? 'pi-check' : 'pi-sliders-h'" />
       </button>
 
       <div v-if="product.totalStock === 0" class="soldout"><span>Hết hàng</span></div>
@@ -133,6 +154,19 @@ async function toggleWish(e: Event) {
 .wish:hover { color: var(--brand); }
 .wish.on { color: var(--brand); }
 .wish .pi { font-size: 14px; }
+
+/* Nút So sánh — ngay dưới nút yêu thích, cùng phong cách tròn nổi nhẹ */
+.cmp-btn {
+  position: absolute; top: 42px; right: 6px; z-index: 2;
+  width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(255, 255, 255, 0.92); color: var(--text-muted);
+  display: grid; place-items: center; box-shadow: var(--shadow-sm);
+  opacity: 0; transform: scale(0.8); transition: all var(--ease);
+}
+.card:hover .cmp-btn, .cmp-btn.on { opacity: 1; transform: scale(1); }
+.cmp-btn:hover { color: var(--brand); }
+.cmp-btn.on { background: var(--brand); color: #fff; }
+.cmp-btn .pi { font-size: 13px; }
 
 .soldout { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(255, 255, 255, 0.65); z-index: 1; }
 .soldout span { background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 12px; padding: 4px 12px; border-radius: var(--radius-pill); }

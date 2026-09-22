@@ -32,6 +32,7 @@ const nav = [
   { label: 'Vận chuyển', icon: 'pi pi-truck', name: 'admin-shipping' },
   { label: 'Mã giảm giá', icon: 'pi pi-ticket', name: 'admin-coupons' },
   { label: 'Flash Sale', icon: 'pi pi-bolt', name: 'admin-flash-sale' },
+  { label: 'Thu cũ đổi mới', icon: 'pi pi-sync', name: 'admin-trade-in' },
   { label: 'Nhật ký', icon: 'pi pi-history', name: 'admin-audit' }
 ]
 

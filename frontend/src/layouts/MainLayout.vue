@@ -5,6 +5,7 @@ import Badge from 'primevue/badge'
 import Menu from 'primevue/menu'
 import Button from 'primevue/button'
 import NotificationBell from '@/components/NotificationBell.vue'
+import CompareBar from '@/components/CompareBar.vue'
 import { categoryApi } from '@/services'
 import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/cart'
@@ -108,6 +109,7 @@ onMounted(async () => {
         <router-link to="/products" class="sub-all"><i class="pi pi-th-large" /> Tất cả sản phẩm</router-link>
         <a v-for="c in trending" :key="c.id" @click="quickCat(c.id)">{{ c.label }}</a>
         <!-- Tính năng đặc thù điện thoại -->
+        <router-link to="/compare" class="sub-feat"><i class="pi pi-sliders-h" /> So sánh máy</router-link>
         <router-link to="/warranty" class="sub-feat"><i class="pi pi-verified" /> Tra cứu bảo hành</router-link>
         <router-link to="/trade-in" class="sub-feat"><i class="pi pi-refresh" /> Thu cũ đổi mới</router-link>
       </div>
@@ -117,6 +119,9 @@ onMounted(async () => {
   <main class="container page">
     <router-view />
   </main>
+
+  <!-- Thanh So sánh nổi — hiện khi khách đã chọn máy để so sánh -->
+  <CompareBar />
 
   <footer class="footer">
     <div class="container footer-grid">
