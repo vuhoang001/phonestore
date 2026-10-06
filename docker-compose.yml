@@ -2,7 +2,6 @@ services:
   db:
     image: postgres:16-alpine
     container_name: phonestore-db
-    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -21,7 +20,6 @@ services:
   minio:
     image: minio/minio:latest
     container_name: phonestore-minio
-    restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
       MINIO_ROOT_USER: "${MINIO_USER:-minioadmin}"
@@ -41,7 +39,6 @@ services:
     build:
       context: ./backend
     container_name: phonestore-api
-    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -96,7 +93,6 @@ services:
     build:
       context: ./frontend
     container_name: phonestore-web
-    restart: unless-stopped
     depends_on:
       - api
     ports:
