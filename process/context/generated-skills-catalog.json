@@ -9,8 +9,715 @@
       "process/context/generated-skills-catalog.json"
     ]
   },
-  "skillCount": 33,
+  "skillCount": 62,
   "skills": [
+    {
+      "folder": "architecture-docs",
+      "name": "architecture-docs",
+      "description": "Create, review, or update software architecture documentation for existing or new projects. Use arc42 as a tailored content structure, C4 diagrams where useful, MADR-style records for consequential decisions, and choose automated architecture checks by the actual project stack. Do not use for routine feature implementation or general product roadmaps.",
+      "aliases": [
+        "architecture-docs"
+      ],
+      "normalizedName": "architecturedocs",
+      "triggerKeywords": [
+        "architecture",
+        "docs",
+        "create",
+        "review",
+        "update",
+        "software",
+        "documentation",
+        "existing"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [
+        "references/standard.md",
+        "templates/ADR.md",
+        "templates/AGENTS.md",
+        "templates/ARCHITECTURE.md",
+        "templates/DECISIONS-README.md"
+      ],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "ask-matt",
+      "name": "ask-matt",
+      "description": "Ask which skill or flow fits your situation. A router over the skills in this repo.",
+      "aliases": [
+        "ask-matt"
+      ],
+      "normalizedName": "askmatt",
+      "triggerKeywords": [
+        "ask",
+        "matt",
+        "skill",
+        "flow",
+        "fits",
+        "situation",
+        "router",
+        "over"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "grill-with-docs"
+      ]
+    },
+    {
+      "folder": "code-review",
+      "name": "code-review",
+      "description": "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \\\"review since X\\\".",
+      "aliases": [
+        "code-review"
+      ],
+      "normalizedName": "codereview",
+      "triggerKeywords": [
+        "code",
+        "review",
+        "changes",
+        "since",
+        "fixed",
+        "point",
+        "commit",
+        "branch"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "codebase-design",
+      "name": "codebase-design",
+      "description": "Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.",
+      "aliases": [
+        "codebase-design"
+      ],
+      "normalizedName": "codebasedesign",
+      "triggerKeywords": [
+        "codebase",
+        "design",
+        "shared",
+        "vocabulary",
+        "designing",
+        "deep",
+        "modules",
+        "wants"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "diagnosing-bugs",
+      "name": "diagnosing-bugs",
+      "description": "Diagnosis loop for hard bugs and performance regressions. Use when the user says \"diagnose\"/\"debug this\", or reports something broken/throwing/failing/slow.",
+      "aliases": [
+        "diagnosing-bugs"
+      ],
+      "normalizedName": "diagnosingbugs",
+      "triggerKeywords": [
+        "diagnosing",
+        "bugs",
+        "diagnosis",
+        "loop",
+        "hard",
+        "performance",
+        "regressions",
+        "says"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [
+        "scripts/hitl-loop.template.sh"
+      ],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "domain-modeling",
+      "name": "domain-modeling",
+      "description": "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR.",
+      "aliases": [
+        "domain-modeling"
+      ],
+      "normalizedName": "domainmodeling",
+      "triggerKeywords": [
+        "domain",
+        "modeling",
+        "build",
+        "sharpen",
+        "project",
+        "model",
+        "discussing",
+        "codebase"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "grill-me",
+      "name": "grill-me",
+      "description": "A relentless interview to sharpen a plan or design.",
+      "aliases": [
+        "grill-me"
+      ],
+      "normalizedName": "grillme",
+      "triggerKeywords": [
+        "grill",
+        "me",
+        "relentless",
+        "interview",
+        "sharpen",
+        "plan",
+        "design"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "grill-with-docs",
+      "name": "grill-with-docs",
+      "description": "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go.",
+      "aliases": [
+        "grill-with-docs"
+      ],
+      "normalizedName": "grillwithdocs",
+      "triggerKeywords": [
+        "grill",
+        "with",
+        "docs",
+        "relentless",
+        "interview",
+        "sharpen",
+        "plan",
+        "design"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "grilling",
+      "name": "grilling",
+      "description": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.",
+      "aliases": [
+        "grilling"
+      ],
+      "normalizedName": "grilling",
+      "triggerKeywords": [
+        "grilling",
+        "grill",
+        "relentlessly",
+        "about",
+        "plan",
+        "decision",
+        "idea",
+        "wants"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "handoff",
+      "name": "handoff",
+      "description": "Compact the current conversation into a handoff document for another agent to pick up.",
+      "aliases": [
+        "handoff"
+      ],
+      "normalizedName": "handoff",
+      "triggerKeywords": [
+        "handoff",
+        "compact",
+        "conversation",
+        "document",
+        "another",
+        "agent",
+        "pick"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "implement",
+      "name": "implement",
+      "description": "Implement a piece of work based on a spec or set of tickets.",
+      "aliases": [
+        "implement"
+      ],
+      "normalizedName": "implement",
+      "triggerKeywords": [
+        "implement",
+        "piece",
+        "work",
+        "spec",
+        "tickets"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "implement-spec",
+      "name": "implement-spec",
+      "description": "Implement the result of /to-spec and /to-tickets in code.",
+      "aliases": [
+        "implement-spec"
+      ],
+      "normalizedName": "implementspec",
+      "triggerKeywords": [
+        "implement",
+        "spec",
+        "result",
+        "to-spec",
+        "to-tickets",
+        "code"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "code-review",
+        "tdd"
+      ]
+    },
+    {
+      "folder": "improve-codebase-architecture",
+      "name": "improve-codebase-architecture",
+      "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.",
+      "aliases": [
+        "improve-codebase-architecture"
+      ],
+      "normalizedName": "improvecodebasearchitecture",
+      "triggerKeywords": [
+        "improve",
+        "codebase",
+        "architecture",
+        "scan",
+        "deepening",
+        "opportunities",
+        "present",
+        "them"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "pr",
+      "name": "pr",
+      "description": "Use when writing a PR body.",
+      "aliases": [
+        "pr"
+      ],
+      "normalizedName": "pr",
+      "triggerKeywords": [
+        "pr",
+        "writing",
+        "body"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "prototype",
+      "name": "prototype",
+      "description": "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like.",
+      "aliases": [
+        "prototype"
+      ],
+      "normalizedName": "prototype",
+      "triggerKeywords": [
+        "prototype",
+        "build",
+        "throwaway",
+        "answer",
+        "design",
+        "question",
+        "wants",
+        "sanity-check"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "research",
+      "name": "research",
+      "description": "Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.",
+      "aliases": [
+        "research"
+      ],
+      "normalizedName": "research",
+      "triggerKeywords": [
+        "research",
+        "investigate",
+        "question",
+        "against",
+        "high-trust",
+        "primary",
+        "sources",
+        "capture"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "retro",
+      "name": "retro",
+      "description": "Conduct a retrospective on a coding session.",
+      "aliases": [
+        "retro"
+      ],
+      "normalizedName": "retro",
+      "triggerKeywords": [
+        "retro",
+        "conduct",
+        "retrospective",
+        "coding",
+        "session"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "writing-for-agents"
+      ]
+    },
+    {
+      "folder": "setup-matt-pocock-skills",
+      "name": "setup-matt-pocock-skills",
+      "description": "Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills.",
+      "aliases": [
+        "setup-matt-pocock-skills"
+      ],
+      "normalizedName": "setupmattpocockskills",
+      "triggerKeywords": [
+        "setup",
+        "matt",
+        "pocock",
+        "skills",
+        "configure",
+        "engineering",
+        "issue",
+        "tracker"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "to-spec",
+        "to-tickets",
+        "triage"
+      ]
+    },
+    {
+      "folder": "tdd",
+      "name": "tdd",
+      "description": "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests.",
+      "aliases": [
+        "tdd"
+      ],
+      "normalizedName": "tdd",
+      "triggerKeywords": [
+        "tdd",
+        "test-driven",
+        "development",
+        "wants",
+        "build",
+        "features",
+        "bugs",
+        "test-first"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "code-review"
+      ]
+    },
+    {
+      "folder": "teach",
+      "name": "teach",
+      "description": "Teach the user a new skill or concept, within this workspace.",
+      "aliases": [
+        "teach"
+      ],
+      "normalizedName": "teach",
+      "triggerKeywords": [
+        "teach",
+        "skill",
+        "concept",
+        "within",
+        "workspace"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "to-questionnaire",
+      "name": "to-questionnaire",
+      "description": "Turn a decision you can't fully answer into a questionnaire for someone else to fill in.",
+      "aliases": [
+        "to-questionnaire"
+      ],
+      "normalizedName": "toquestionnaire",
+      "triggerKeywords": [
+        "to",
+        "questionnaire",
+        "turn",
+        "decision",
+        "fully",
+        "answer",
+        "someone",
+        "else"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "to-spec",
+      "name": "to-spec",
+      "description": "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed.",
+      "aliases": [
+        "to-spec"
+      ],
+      "normalizedName": "tospec",
+      "triggerKeywords": [
+        "to",
+        "spec",
+        "turn",
+        "conversation",
+        "publish",
+        "project",
+        "issue",
+        "tracker"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "to-tickets",
+      "name": "to-tickets",
+      "description": "Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edges as text in one file per ticket locally, or native blocking links on a real tracker).",
+      "aliases": [
+        "to-tickets"
+      ],
+      "normalizedName": "totickets",
+      "triggerKeywords": [
+        "to",
+        "tickets",
+        "break",
+        "plan",
+        "spec",
+        "conversation",
+        "tracer-bullet",
+        "each"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "track",
+      "name": "track",
+      "description": "Use when the user explicitly asks to add, update, or view a task in the local-first Work Hub, or invokes /track.",
+      "aliases": [
+        "track"
+      ],
+      "normalizedName": "track",
+      "triggerKeywords": [
+        "track",
+        "Work Hub",
+        "task",
+        "add task",
+        "update task",
+        "task status"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "triage",
+      "name": "triage",
+      "description": "Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs.",
+      "aliases": [
+        "triage"
+      ],
+      "normalizedName": "triage",
+      "triggerKeywords": [
+        "triage",
+        "move",
+        "issues",
+        "external",
+        "through",
+        "state",
+        "machine",
+        "roles"
+      ],
+      "layer": "contract",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
     {
       "folder": "vc-agent-browser",
       "name": "vc-agent-browser",
@@ -949,6 +1656,121 @@
         "e2e",
         "integration test",
         "performance test"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "wait-what",
+      "name": "wait-what",
+      "description": "Stop. That last message did not land: re-pitch it.",
+      "aliases": [
+        "wait-what"
+      ],
+      "normalizedName": "waitwhat",
+      "triggerKeywords": [
+        "wait",
+        "what",
+        "stop",
+        "last",
+        "message",
+        "land",
+        "re-pitch"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "wayfinder",
+      "name": "wayfinder",
+      "description": "Plan a huge chunk of work (more than one agent session can hold) as a shared map of decision tickets on your issue tracker, and resolve them one at a time until the way to the destination is clear.",
+      "aliases": [
+        "wayfinder"
+      ],
+      "normalizedName": "wayfinder",
+      "triggerKeywords": [
+        "wayfinder",
+        "plan",
+        "huge",
+        "chunk",
+        "work",
+        "more",
+        "than",
+        "agent"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": [
+        "grilling",
+        "prototype",
+        "research"
+      ]
+    },
+    {
+      "folder": "wizard",
+      "name": "wizard",
+      "description": "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI secrets, walking an unfamiliar third-party dashboard, or running a one-off migration or cutover. Don't invoke this for steps the agent can perform itself.",
+      "aliases": [
+        "wizard"
+      ],
+      "normalizedName": "wizard",
+      "triggerKeywords": [
+        "wizard",
+        "generate",
+        "interactive",
+        "bash",
+        "walks",
+        "human",
+        "through",
+        "steps"
+      ],
+      "layer": "helper",
+      "routedFrom": [
+        "AGENTS.md",
+        "process/context/generated-skills-catalog.json"
+      ],
+      "allowlisted": false,
+      "allowlistReason": null,
+      "relativeReferences": [],
+      "mentionedSkills": []
+    },
+    {
+      "folder": "writing-for-agents",
+      "name": "writing-for-agents",
+      "description": "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md.",
+      "aliases": [
+        "writing-for-agents"
+      ],
+      "normalizedName": "writingforagents",
+      "triggerKeywords": [
+        "writing",
+        "for",
+        "agents",
+        "documents",
+        "creating",
+        "editing",
+        "skills",
+        "modifying"
       ],
       "layer": "helper",
       "routedFrom": [

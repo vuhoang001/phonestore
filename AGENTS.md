@@ -321,6 +321,18 @@ Former workflow-owner skills such as `vc:plan`, `vc:research`, `vc:cook`, `vc:fi
 - `vc-audit-plans` - Audit active-plan inventory, staleness, and routing truth
 - `vc-audit-vc` - Audit agent harness health: agent parity, skill registry, README.md sync, and protocol wiring
 
+### Imported Personal Skills
+
+Project-local additions from `claude-dotfiles` are available through `.agents/skills/`:
+`architecture-docs`, `ask-matt`, `code-review`, `codebase-design`, `diagnosing-bugs`,
+`domain-modeling`, `grill-me`, `grill-with-docs`, `grilling`, `handoff`, `implement`,
+`implement-spec`, `improve-codebase-architecture`, `pr`, `prototype`, `research`, `retro`,
+`setup-matt-pocock-skills`, `tdd`, `teach`, `to-questionnaire`, `to-spec`, `to-tickets`,
+`track`, `triage`, `wait-what`, `wayfinder`, `wizard`, and `writing-for-agents`.
+These skills supplement the repository's RIPER-5 routing; they do not replace its phase gates.
+Claude Code's `/track` skill is defined in `.claude/skills/track/SKILL.md` and follows the Work Hub
+rules above. Work Hub operations remain opt-in: act only when the user explicitly requests them.
+
 Legacy `@sync-to-riper5.md` and `@sync-from-riper5.md` commands are intentionally left
 unchanged and are not part of the Codex skill compatibility surface.
 

@@ -348,6 +348,11 @@ generated skills catalog inventory). Per-skill detail lives in each `.claude/ski
 - **`vc-audit-context`** - Audit context routing, grouping, discoverability, and Claude/Codex wiring
 - **`vc-audit-vc`** - Audit agent harness health: agent parity, skill registry, README.md sync, and protocol wiring
 
+Project-local additions from `claude-dotfiles` are cataloged under `.claude/skills/` and exposed
+to Codex through `.agents/skills/`. They supplement the repository's RIPER-5 phase gates. Claude
+Code's `/track` skill lives in `.claude/skills/track/SKILL.md`; Work Hub operations remain opt-in.
+See `AGENTS.md` for the imported skill inventory and the shared Work Hub rules.
+
 Legacy `@sync-to-riper5.md` and `@sync-from-riper5.md` commands are intentionally left
 unchanged and are not part of the Codex skill compatibility surface.
 

@@ -1,0 +1,15 @@
+{
+  "name": "makara",
+  "version": "1.0.0",
+  "description": "Hệ thống thương mại điện tử chuyên **điện thoại & phụ kiện**, xây theo **Clean Architecture (.NET 8)** + **Vue 3**. Mô phỏng kiến trúc dự án ShopViet nhưng nghiệp vụ đặc thù ngành điện thoại.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
