@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hướng dẫn sử dụng PhoneStore</title>
+<style>
+  :root{
+    --brand:#0071e3; --bg:#f5f5f7; --surface:#fff; --text:#1d1d1f; --text-2:#4b4f58;
+    --muted:#86868b; --border:#e5e5ea; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Be Vietnam Pro","Inter",system-ui,Segoe UI,Roboto,sans-serif;
+    color:var(--text);background:var(--bg);line-height:1.6}
+  .layout{display:flex;align-items:flex-start;max-width:1280px;margin:0 auto}
+  /* Sidebar dính theo scroll */
+  aside{position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;
+    width:320px;flex:0 0 320px;padding:20px 14px;border-right:1px solid var(--border);
+    background:var(--surface)}
+  aside h2{font-size:15px;margin:0 0 6px;padding:0 8px;color:var(--text)}
+  aside .sub{font-size:12px;color:var(--muted);margin:0 8px 14px}
+  nav{display:flex;flex-direction:column;gap:1px}
+  nav a{display:block;padding:6px 10px;border-radius:8px;text-decoration:none;
+    color:var(--text-2);font-size:13.5px;transition:background .15s,color .15s}
+  nav a.lv2{font-weight:700;color:var(--text);margin-top:12px}
+  nav a.lv3{padding-left:20px;font-size:13px}
+  nav a:hover{background:var(--bg)}
+  nav a.active{background:var(--brand);color:#fff;font-weight:600}
+  /* Nội dung */
+  main{flex:1;min-width:0;padding:32px 40px 120px;background:var(--bg)}
+  main h1{font-size:30px;margin:0 0 8px}
+  main h2{font-size:23px;margin:48px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
+  main h3{font-size:18px;margin:34px 0 10px;color:var(--brand)}
+  main img{max-width:100%;height:auto;border:1px solid var(--border);border-radius:12px;
+    box-shadow:0 4px 16px rgba(0,0,0,.06);margin:10px 0 22px;display:block}
+  main p{margin:10px 0}
+  main table{border-collapse:collapse;width:100%;margin:14px 0}
+  main th,main td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+  main th{background:var(--surface)}
+  main blockquote{margin:14px 0;padding:10px 16px;border-left:4px solid var(--brand);
+    background:var(--surface);border-radius:8px;color:var(--text-2)}
+  main code{background:#f0f0f3;padding:2px 6px;border-radius:6px;font-size:.9em}
+  main a{color:var(--brand)}
+  main hr{border:none;border-top:1px solid var(--border);margin:28px 0}
+  /* Nút lên đầu */
+  #top{position:fixed;right:24px;bottom:24px;background:var(--brand);color:#fff;border:none;
+    width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;display:none;
+    box-shadow:0 6px 20px rgba(0,113,227,.4)}
+  #top.show{display:block}
+  @media(max-width:900px){
+    aside{display:none}
+    main{padding:20px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <h2>📑 Mục lục</h2>
+    <p class="sub">Bấm để nhảy tới chức năng. Mục đang xem được tô sáng.</p>
+    <nav id="toc">
+<a class="lv2" href="#trạng-thái-kiểm-chứng" data-id="trạng-thái-kiểm-chứng">Trạng thái kiểm chứng</a>
+<a class="lv2" href="#1-khởi-động-và-đăng-nhập" data-id="1-khởi-động-và-đăng-nhập">1. Khởi động và đăng nhập</a>
+<a class="lv2" href="#2-luồng-khách-hàng" data-id="2-luồng-khách-hàng">2. Luồng khách hàng</a>
+<a class="lv3" href="#21-duyệt-tìm-và-lọc-điện-thoại" data-id="21-duyệt-tìm-và-lọc-điện-thoại">2.1. Duyệt, tìm và lọc điện thoại</a>
+<a class="lv3" href="#22-xem-chi-tiết-và-chọn-biến-thể" data-id="22-xem-chi-tiết-và-chọn-biến-thể">2.2. Xem chi tiết và chọn biến thể</a>
+<a class="lv3" href="#23-so-sánh-điện-thoại" data-id="23-so-sánh-điện-thoại">2.3. So sánh điện thoại</a>
+<a class="lv3" href="#24-giỏ-hàng" data-id="24-giỏ-hàng">2.4. Giỏ hàng</a>
+<a class="lv3" href="#25-đặt-hàng-và-thanh-toán" data-id="25-đặt-hàng-và-thanh-toán">2.5. Đặt hàng và thanh toán</a>
+<a class="lv3" href="#26-theo-dõi-đơn-hàng-hủy-và-mua-lại" data-id="26-theo-dõi-đơn-hàng-hủy-và-mua-lại">2.6. Theo dõi đơn hàng, hủy và mua lại</a>
+<a class="lv3" href="#27-thanh-toán-lại-và-trả-góp" data-id="27-thanh-toán-lại-và-trả-góp">2.7. Thanh toán lại và trả góp</a>
+<a class="lv3" href="#28-danh-sách-yêu-thích-và-thông-báo" data-id="28-danh-sách-yêu-thích-và-thông-báo">2.8. Danh sách yêu thích và thông báo</a>
+<a class="lv3" href="#29-tài-khoản-và-mật-khẩu" data-id="29-tài-khoản-và-mật-khẩu">2.9. Tài khoản và mật khẩu</a>
+<a class="lv3" href="#210-tra-cứu-bảo-hành-bằng-imei-hoặc-mã-đơn" data-id="210-tra-cứu-bảo-hành-bằng-imei-hoặc-mã-đơn">2.10. Tra cứu bảo hành bằng IMEI hoặc mã đơn</a>
+<a class="lv3" href="#211-thu-cũ-đổi-mới" data-id="211-thu-cũ-đổi-mới">2.11. Thu cũ đổi mới</a>
+<a class="lv3" href="#212-trang-hỗ-trợ-và-chính-sách" data-id="212-trang-hỗ-trợ-và-chính-sách">2.12. Trang hỗ trợ và chính sách</a>
+<a class="lv2" href="#3-luồng-quản-trị-viên" data-id="3-luồng-quản-trị-viên">3. Luồng quản trị viên</a>
+<a class="lv3" href="#31-vào-trang-quản-trị" data-id="31-vào-trang-quản-trị">3.1. Vào trang quản trị</a>
+<a class="lv3" href="#32-dashboard-và-báo-cáo" data-id="32-dashboard-và-báo-cáo">3.2. Dashboard và báo cáo</a>
+<a class="lv3" href="#33-quản-lý-thương-hiệu-và-danh-mục" data-id="33-quản-lý-thương-hiệu-và-danh-mục">3.3. Quản lý thương hiệu và danh mục</a>
+<a class="lv3" href="#34-quản-lý-sản-phẩm-biến-thể-và-tồn-kho" data-id="34-quản-lý-sản-phẩm-biến-thể-và-tồn-kho">3.4. Quản lý sản phẩm, biến thể và tồn kho</a>
+<a class="lv3" href="#35-xử-lý-đơn-hàng-và-imei" data-id="35-xử-lý-đơn-hàng-và-imei">3.5. Xử lý đơn hàng và IMEI</a>
+<a class="lv3" href="#36-cấu-hình-vận-chuyển" data-id="36-cấu-hình-vận-chuyển">3.6. Cấu hình vận chuyển</a>
+<a class="lv3" href="#37-couponkhuyến-mãi-mã-giảm-giá" data-id="37-couponkhuyến-mãi-mã-giảm-giá">3.7. Coupon/khuyến mãi mã giảm giá</a>
+<a class="lv3" href="#38-flash-sale" data-id="38-flash-sale">3.8. Flash sale</a>
+<a class="lv3" href="#39-yêu-cầu-thu-cũ-đổi-mới" data-id="39-yêu-cầu-thu-cũ-đổi-mới">3.9. Yêu cầu thu cũ đổi mới</a>
+<a class="lv3" href="#310-nhật-ký-hoạt-động" data-id="310-nhật-ký-hoạt-động">3.10. Nhật ký hoạt động</a>
+<a class="lv2" href="#4-tình-trạng-tích-hợp-và-giới-hạn-demo" data-id="4-tình-trạng-tích-hợp-và-giới-hạn-demo">4. Tình trạng tích hợp và giới hạn demo</a>
+<a class="lv2" href="#5-ghi-chú-về-ảnh-minh-họa" data-id="5-ghi-chú-về-ảnh-minh-họa">5. Ghi chú về ảnh minh họa</a>
+    </nav>
+  </aside>
+  <main id="content">
+<h1 id="hướng-dẫn-sử-dụng-phonestore">Hướng dẫn sử dụng PhoneStore</h1>
+<p>Tài liệu này hướng dẫn các chức năng khách hàng và quản trị viên <strong>theo từng bước, mỗi bước có ảnh minh họa riêng</strong>. Ảnh được chụp tự động bằng Playwright trên bản đang chạy (<code>http://localhost:5174</code>) nên phản ánh đúng giao diện thực tế. Hướng dẫn giữ nguyên IMEI trong quy trình bán hàng và bảo hành.</p>
+<h2 id="-mục-lục-nhanh">📑 Mục lục nhanh</h2>
+<p>Bấm vào tên chức năng để nhảy thẳng tới phần hướng dẫn tương ứng.</p>
+<p><strong>▶ Bắt đầu:</strong> <a href="#1-kh%E1%BB%9Fi-%C4%91%E1%BB%99ng-v%C3%A0-%C4%91%C4%83ng-nh%E1%BA%ADp">1. Khởi động và đăng nhập</a></p>
+<table>
+<thead>
+<tr>
+<th>👤 Luồng khách hàng</th>
+<th>🛠️ Luồng quản trị viên</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#21-duy%E1%BB%87t-t%C3%ACm-v%C3%A0-l%E1%BB%8Dc-%C4%91i%E1%BB%87n-tho%E1%BA%A1i">2.1. Duyệt, tìm và lọc điện thoại</a></td>
+<td><a href="#31-v%C3%A0o-trang-qu%E1%BA%A3n-tr%E1%BB%8B">3.1. Vào trang quản trị</a></td>
+</tr>
+<tr>
+<td><a href="#22-xem-chi-ti%E1%BA%BFt-v%C3%A0-ch%E1%BB%8Dn-bi%E1%BA%BFn-th%E1%BB%83">2.2. Xem chi tiết và chọn biến thể</a></td>
+<td><a href="#32-dashboard-v%C3%A0-b%C3%A1o-c%C3%A1o">3.2. Dashboard và báo cáo</a></td>
+</tr>
+<tr>
+<td><a href="#23-so-s%C3%A1nh-%C4%91i%E1%BB%87n-tho%E1%BA%A1i">2.3. So sánh điện thoại</a></td>
+<td><a href="#33-qu%E1%BA%A3n-l%C3%BD-th%C6%B0%C6%A1ng-hi%E1%BB%87u-v%C3%A0-danh-m%E1%BB%A5c">3.3. Quản lý thương hiệu và danh mục</a></td>
+</tr>
+<tr>
+<td><a href="#24-gi%E1%BB%8F-h%C3%A0ng">2.4. Giỏ hàng</a></td>
+<td><a href="#34-qu%E1%BA%A3n-l%C3%BD-s%E1%BA%A3n-ph%E1%BA%A9m-bi%E1%BA%BFn-th%E1%BB%83-v%C3%A0-t%E1%BB%93n-kho">3.4. Quản lý sản phẩm, biến thể và tồn kho</a></td>
+</tr>
+<tr>
+<td><a href="#25-%C4%91%E1%BA%B7t-h%C3%A0ng-v%C3%A0-thanh-to%C3%A1n">2.5. Đặt hàng và thanh toán</a></td>
+<td><a href="#35-x%E1%BB%AD-l%C3%BD-%C4%91%C6%A1n-h%C3%A0ng-v%C3%A0-imei">3.5. Xử lý đơn hàng và IMEI</a></td>
+</tr>
+<tr>
+<td><a href="#26-theo-d%C3%B5i-%C4%91%C6%A1n-h%C3%A0ng-h%E1%BB%A7y-v%C3%A0-mua-l%E1%BA%A1i">2.6. Theo dõi đơn hàng, hủy và mua lại</a></td>
+<td><a href="#36-c%E1%BA%A5u-h%C3%ACnh-v%E1%BA%ADn-chuy%E1%BB%83n">3.6. Cấu hình vận chuyển</a></td>
+</tr>
+<tr>
+<td><a href="#27-thanh-to%C3%A1n-l%E1%BA%A1i-v%C3%A0-tr%E1%BA%A3-g%C3%B3p">2.7. Thanh toán lại và trả góp</a></td>
+<td><a href="#37-couponkhuy%E1%BA%BFn-m%C3%A3i-m%C3%A3-gi%E1%BA%A3m-gi%C3%A1">3.7. Coupon/khuyến mãi mã giảm giá</a></td>
+</tr>
+<tr>
+<td><a href="#28-danh-s%C3%A1ch-y%C3%AAu-th%C3%ADch-v%C3%A0-th%C3%B4ng-b%C3%A1o">2.8. Danh sách yêu thích và thông báo</a></td>
+<td><a href="#38-flash-sale">3.8. Flash sale</a></td>
+</tr>
+<tr>
+<td><a href="#29-t%C3%A0i-kho%E1%BA%A3n-v%C3%A0-m%E1%BA%ADt-kh%E1%BA%A9u">2.9. Tài khoản và mật khẩu</a></td>
+<td><a href="#39-y%C3%AAu-c%E1%BA%A7u-thu-c%C5%A9-%C4%91%E1%BB%95i-m%E1%BB%9Bi">3.9. Yêu cầu thu cũ đổi mới</a></td>
+</tr>
+<tr>
+<td><a href="#210-tra-c%E1%BB%A9u-b%E1%BA%A3o-h%C3%A0nh-b%E1%BA%B1ng-imei-ho%E1%BA%B7c-m%C3%A3-%C4%91%C6%A1n">2.10. Tra cứu bảo hành bằng IMEI hoặc mã đơn</a></td>
+<td><a href="#310-nh%E1%BA%ADt-k%C3%BD-ho%E1%BA%A1t-%C4%91%E1%BB%99ng">3.10. Nhật ký hoạt động</a></td>
+</tr>
+<tr>
+<td><a href="#211-thu-c%C5%A9-%C4%91%E1%BB%95i-m%E1%BB%9Bi">2.11. Thu cũ đổi mới</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#212-trang-h%E1%BB%97-tr%E1%BB%A3-v%C3%A0-ch%C3%ADnh-s%C3%A1ch">2.12. Trang hỗ trợ và chính sách</a></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>▶ Khác:</strong> <a href="#tr%E1%BA%A1ng-th%C3%A1i-ki%E1%BB%83m-ch%E1%BB%A9ng">Trạng thái kiểm chứng</a> · <a href="#4-t%C3%ACnh-tr%E1%BA%A1ng-t%C3%ADch-h%E1%BB%A3p-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n-demo">4. Tình trạng tích hợp và giới hạn demo</a> · <a href="#5-ghi-ch%C3%BA-v%E1%BB%81-%E1%BA%A3nh-minh-h%E1%BB%8Da">5. Ghi chú về ảnh minh họa</a></p>
+<hr>
+<h2 id="trạng-thái-kiểm-chứng">Trạng thái kiểm chứng</h2>
+<ul>
+<li><strong>Đã chạy qua trình duyệt:</strong> toàn bộ ảnh trong tài liệu được chụp trực tiếp từ các thao tác thật trên web.</li>
+<li>Bản chạy hiện dùng thanh toán <strong>mô phỏng</strong>; thao tác này không chuyển tiền thật. Email mặc định được ghi log nếu chưa cấu hình SMTP.</li>
+<li>Một vài bước là thao tác hạ tầng (cài Docker, chạy compose) <strong>không có giao diện</strong> nên không kèm ảnh — được ghi chú rõ.</li>
+<li>Tài khoản demo: admin <code>admin@phone.com</code> / <code>Admin@123</code> · khách <code>customer@phone.com</code> / <code>Customer@123</code>.</li>
+</ul>
+<hr>
+<h2 id="1-khởi-động-và-đăng-nhập">1. Khởi động và đăng nhập</h2>
+<ol>
+<li>Cài Docker Desktop hoặc Docker Engine và Docker Compose. <em>(Bước hạ tầng — thao tác dòng lệnh, không có giao diện.)</em></li>
+<li>Tại thư mục dự án, sao chép <code>.env.example</code> thành <code>.env</code> nếu chưa có. Chỉ điền thông tin dịch vụ khi cần; không đưa secret thật vào tài liệu hoặc Git. <em>(Bước hạ tầng — không có giao diện.)</em></li>
+<li>Chạy <code>docker compose up -d --build</code>. <em>(Bước hạ tầng — không có giao diện.)</em></li>
+<li>Mở website tại <code>http://localhost:5174</code>; Swagger API mặc định ở <code>http://localhost:8081/swagger</code>.</li>
+</ol>
+<p><img src="images/huong-dan/s1/step4.png" alt="Trang chủ PhoneStore sau khi mở website"></p>
+<ol start="5">
+<li>Đăng nhập tài khoản admin demo: <code>admin@phone.com</code> / <code>Admin@123</code> (hoặc khách <code>customer@phone.com</code> / <code>Customer@123</code>). Nếu mật khẩu đã đổi qua <code>.env</code>, dùng thông tin cấu hình hiện tại.</li>
+</ol>
+<p><img src="images/huong-dan/s1/step5.png" alt="Màn hình đăng nhập với hai trường email và mật khẩu"></p>
+<ol start="6">
+<li>Để tạo tài khoản khách, vào <strong>Đăng ký</strong>, điền họ tên, email, số điện thoại và mật khẩu rồi gửi biểu mẫu. Nếu bật xác nhận email, mở thư xác nhận trước khi đăng nhập.</li>
+</ol>
+<p><img src="images/huong-dan/s1/step6.png" alt="Biểu mẫu đăng ký tài khoản khách"></p>
+<hr>
+<h2 id="2-luồng-khách-hàng">2. Luồng khách hàng</h2>
+<h3 id="21-duyệt-tìm-và-lọc-điện-thoại">2.1. Duyệt, tìm và lọc điện thoại</h3>
+<ol>
+<li>Mở <strong>Sản phẩm</strong> hoặc trang chủ — danh sách hiện lưới sản phẩm và bộ lọc thương hiệu/dung lượng/danh mục/khoảng giá bên trái.</li>
+</ol>
+<p><img src="images/huong-dan/s2-1/step1.png" alt="Danh sách sản phẩm với bộ lọc bên trái"></p>
+<ol start="2">
+<li>Nhập tên máy/nhãn hiệu vào ô tìm kiếm (ví dụ <code>iPhone</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s2-1/step2.png" alt="Tìm kiếm từ khóa iPhone"></p>
+<ol start="3">
+<li>Chọn bộ lọc thương hiệu (ví dụ Samsung) — kết quả thu hẹp theo hãng, chip lọc hiển thị ngay trên danh sách.</li>
+</ol>
+<p><img src="images/huong-dan/s2-1/step3.png" alt="Lọc theo thương hiệu Samsung"></p>
+<ol start="4">
+<li>Sắp xếp danh sách theo lựa chọn hiển thị (ví dụ &quot;Bán chạy&quot;).</li>
+</ol>
+<p><img src="images/huong-dan/s2-1/step4.png" alt="Sắp xếp theo Bán chạy"></p>
+<ol start="5">
+<li>Chọn một thẻ sản phẩm để mở trang chi tiết; kiểm tra giá, tình trạng hàng, khuyến mãi, cấu hình và mô tả.</li>
+</ol>
+<p><img src="images/huong-dan/s2-1/step5.png" alt="Mở trang chi tiết sản phẩm"></p>
+<p><strong>Lưu ý đã quan sát:</strong> bộ lọc <strong>dung lượng</strong> (64GB, 128GB...) hiện có thể trả danh sách trống vì dữ liệu seed không gắn dung lượng vào bộ lọc theo biến thể. Bộ lọc từ 4 sao cũng có thể trả 0 với dữ liệu hiện có.</p>
+<h3 id="22-xem-chi-tiết-và-chọn-biến-thể">2.2. Xem chi tiết và chọn biến thể</h3>
+<ol>
+<li>Mở sản phẩm từ danh sách — trang chi tiết hiện ảnh, giá, lựa chọn màu/dung lượng, tồn kho và các nút mua.</li>
+</ol>
+<p><img src="images/huong-dan/s2-2/step1.png" alt="Trang chi tiết sản phẩm"></p>
+<ol start="2">
+<li>Chọn <strong>màu</strong> và <strong>dung lượng</strong> nếu sản phẩm có biến thể.</li>
+</ol>
+<p><img src="images/huong-dan/s2-2/step2.png" alt="Chọn biến thể màu và dung lượng"></p>
+<ol start="3">
+<li>Kiểm tra giá và tồn kho thay đổi theo biến thể đã chọn (biến thể hết hàng bị khóa, không chọn được).</li>
+</ol>
+<p><img src="images/huong-dan/s2-2/step3.png" alt="Biến thể hết hàng bị khóa"></p>
+<ol start="4">
+<li>Xem <strong>thông số kỹ thuật</strong> gom nhóm (màn hình, chip, camera, pin...), mô tả, đánh giá và sản phẩm liên quan.</li>
+</ol>
+<p><img src="images/huong-dan/s2-2/step4.png" alt="Bảng thông số kỹ thuật"></p>
+<ol start="5">
+<li>Chọn <strong>Thêm vào giỏ</strong> để mua sau hoặc <strong>Mua ngay</strong> để sang bước mua hàng.</li>
+</ol>
+<p><img src="images/huong-dan/s2-2/step5.png" alt="Khu vực mua hàng với nút Thêm vào giỏ và Mua ngay"></p>
+<h3 id="23-so-sánh-điện-thoại">2.3. So sánh điện thoại</h3>
+<ol>
+<li>Tại danh sách hoặc trang chi tiết, bấm nút <strong>thêm vào so sánh</strong> trên các máy muốn đối chiếu — thanh so sánh hiện ở dưới (ví dụ &quot;So sánh 2/4&quot;).</li>
+</ol>
+<p><img src="images/huong-dan/s2-3/step1.png" alt="Thêm máy vào so sánh"></p>
+<ol start="2">
+<li>Mở <strong>So sánh</strong> — bảng thông số hai máy đặt cạnh nhau.</li>
+</ol>
+<p><img src="images/huong-dan/s2-3/step2.png" alt="Bảng so sánh hai máy"></p>
+<ol start="3">
+<li>Cuộn bảng để đọc thêm các thông số (màn hình, danh mục, trả góp...).</li>
+</ol>
+<p><img src="images/huong-dan/s2-3/step3.png" alt="Cuộn bảng so sánh xem thêm thông số"></p>
+<ol start="4">
+<li>Xóa máy khỏi danh sách so sánh khi không cần nữa — bảng trống hiện gợi ý khám phá sản phẩm.</li>
+</ol>
+<p><img src="images/huong-dan/s2-3/step4.png" alt="Danh sách so sánh sau khi xóa máy"></p>
+<h3 id="24-giỏ-hàng">2.4. Giỏ hàng</h3>
+<ol>
+<li>Mở biểu tượng giỏ hàng hoặc đường dẫn <code>/cart</code> — xem các dòng hàng và tóm tắt đơn.</li>
+</ol>
+<p><img src="images/huong-dan/s2-4/step1.png" alt="Giỏ hàng với các dòng sản phẩm"></p>
+<ol start="2">
+<li>Đánh dấu từng dòng hàng hoặc chọn tất cả sản phẩm muốn đặt.</li>
+</ol>
+<p><img src="images/huong-dan/s2-4/step2.png" alt="Tick chọn dòng hàng"></p>
+<ol start="3">
+<li>Điều chỉnh số lượng bằng nút tăng/giảm; số lượng không được vượt quá tồn kho.</li>
+</ol>
+<p><img src="images/huong-dan/s2-4/step3.png" alt="Chỉnh số lượng bằng nút tăng/giảm"></p>
+<ol start="4">
+<li>Xóa mặt hàng không còn cần bằng nút thùng rác đỏ trên dòng.</li>
+</ol>
+<p><img src="images/huong-dan/s2-4/step4.png" alt="Nút xóa mặt hàng"></p>
+<ol start="5">
+<li>Kiểm tra tạm tính rồi chọn tiếp tục thanh toán.</li>
+</ol>
+<p><img src="images/huong-dan/s2-4/step5.png" alt="Tóm tắt tạm tính và nút mua hàng"></p>
+<p>Giỏ hàng khách vãng lai được lưu ở trình duyệt; sau khi đăng nhập, giỏ có thể được đồng bộ với tài khoản.</p>
+<h3 id="25-đặt-hàng-và-thanh-toán">2.5. Đặt hàng và thanh toán</h3>
+<ol>
+<li>Đăng nhập hoặc đăng ký tài khoản — trang thanh toán yêu cầu đăng nhập.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step1.png" alt="Yêu cầu đăng nhập trước khi thanh toán"></p>
+<ol start="2">
+<li>Tại <code>/checkout</code>, chọn hoặc nhập <strong>địa chỉ nhận hàng</strong>.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step2.png" alt="Chọn địa chỉ giao hàng"></p>
+<ol start="3">
+<li>Chọn <strong>phương thức giao hàng</strong> đang khả dụng.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step3.png" alt="Chọn phương thức vận chuyển"></p>
+<ol start="4">
+<li>Nhập <strong>mã giảm giá</strong> nếu có rồi áp dụng (ví dụ <code>WELCOME10</code>); kiểm tra điều kiện tối thiểu và số tiền giảm.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step4.png" alt="Áp mã giảm giá WELCOME10"></p>
+<ol start="5">
+<li>Chọn <strong>COD</strong>, <strong>VNPay</strong> hoặc <strong>trả góp</strong> nếu tùy chọn được cung cấp cho đơn.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step5.png" alt="Chọn phương thức thanh toán COD"></p>
+<ol start="6">
+<li>Với <strong>trả góp</strong>, chọn kỳ hạn hiển thị (ví dụ 6/9/12 tháng) và xem số tiền dự kiến mỗi kỳ.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step6.png" alt="Chọn trả góp và xem kỳ hạn"></p>
+<ol start="7">
+<li>Ghi chú cho cửa hàng nếu cần, rà soát sản phẩm, địa chỉ, phí ship và tổng tiền.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step7.png" alt="Rà soát toàn bộ đơn trước khi đặt"></p>
+<ol start="8">
+<li>Gửi đặt hàng — màn xác nhận hiện <strong>mã đơn</strong>; ghi lại để tra cứu.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step8.png" alt="Màn xác nhận đơn với mã đơn"></p>
+<ol start="9">
+<li>Với COD, chờ cửa hàng xác nhận và giao hàng. Với VNPay trong môi trường demo, làm theo màn hình mô phỏng; không coi đây là giao dịch tiền thật.</li>
+</ol>
+<p><img src="images/huong-dan/s2-5/step9.png" alt="Chi tiết đơn vừa đặt với lịch sử trạng thái"></p>
+<h3 id="26-theo-dõi-đơn-hàng-hủy-và-mua-lại">2.6. Theo dõi đơn hàng, hủy và mua lại</h3>
+<ol>
+<li>Đăng nhập rồi mở <strong>Đơn hàng của tôi</strong> (<code>/orders</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step1.png" alt="Danh sách đơn hàng của tôi"></p>
+<ol start="2">
+<li>Lọc hoặc chọn đơn cần xem.</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step2.png" alt="Mở một đơn để xem chi tiết"></p>
+<ol start="3">
+<li>Mở chi tiết để xem sản phẩm, thanh toán, địa chỉ và lịch sử trạng thái.</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step3.png" alt="Chi tiết đơn hàng đầy đủ"></p>
+<ol start="4">
+<li>Đơn đang <strong>chờ</strong> hoặc <strong>đã xác nhận</strong> có thể hiện thao tác <strong>hủy</strong> nếu chính sách cho phép (đơn đã hoàn tất không có nút hủy).</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step4.png" alt="Đơn đã hoàn tất không còn nút hủy"></p>
+<ol start="5">
+<li>Với đơn đã hoàn tất hoặc đã hủy, dùng <strong>Mua lại</strong> nếu nút này khả dụng để đưa sản phẩm trở lại giỏ.</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step5.png" alt="Nút Mua lại trên đơn đã hoàn tất"></p>
+<ol start="6">
+<li>Khi đơn đã giao/xuất kho, nhân viên gán IMEI/serial thiết bị; khách có thể xem thông tin IMEI trong chi tiết đơn theo trạng thái và quyền hiển thị.</li>
+</ol>
+<p><img src="images/huong-dan/s2-6/step6.png" alt="Chi tiết đơn hoàn tất — nơi hiển thị IMEI khi đã gán"></p>
+<h3 id="27-thanh-toán-lại-và-trả-góp">2.7. Thanh toán lại và trả góp</h3>
+<ol>
+<li>Mở đơn chưa thanh toán từ trang chi tiết.</li>
+</ol>
+<p><img src="images/huong-dan/s2-7/step1.png" alt="Chi tiết đơn hàng"></p>
+<ol start="2">
+<li>Nếu thanh toán VNPay còn hiệu lực, chọn thanh toán và hoàn tất bước được yêu cầu. <em>(Đơn COD không có nút thanh toán lại — cần đơn VNPay chưa thanh toán mới hiện nút này.)</em></li>
+</ol>
+<p><img src="images/huong-dan/s2-7/step2.png" alt="Đơn COD không có nút thanh toán lại VNPay"></p>
+<ol start="3">
+<li>Để xem các khoản <strong>trả góp</strong>, đăng nhập và mở <code>/installments</code> — danh sách các kỳ, kỳ đã trả và kỳ cần thanh toán.</li>
+</ol>
+<p><img src="images/huong-dan/s2-7/step3.png" alt="Trang Trả góp của tôi với lịch các kỳ"></p>
+<ol start="4">
+<li>Chọn <strong>kỳ</strong> cần xử lý và bấm <strong>Thanh toán</strong>.</li>
+</ol>
+<p><img src="images/huong-dan/s2-7/step4.png" alt="Chọn kỳ cần thanh toán"></p>
+<ol start="5">
+<li>Làm theo hướng dẫn trên màn hình để hoàn tất kỳ. Môi trường hiện tại là luồng <strong>mô phỏng</strong> — không dùng kết quả mô phỏng làm bằng chứng đã thu tiền thật.</li>
+</ol>
+<p><img src="images/huong-dan/s2-7/step5.png" alt="Xác nhận thanh toán kỳ trả góp"></p>
+<h3 id="28-danh-sách-yêu-thích-và-thông-báo">2.8. Danh sách yêu thích và thông báo</h3>
+<ol>
+<li>Đăng nhập — trang chủ sau đăng nhập.</li>
+</ol>
+<p><img src="images/huong-dan/s2-8/step1.png" alt="Trang chủ sau khi đăng nhập"></p>
+<ol start="2">
+<li>Thêm sản phẩm vào <strong>yêu thích</strong> từ thẻ sản phẩm hoặc trang chi tiết (nút trái tim) — hiện thông báo &quot;Đã cập nhật yêu thích&quot;.</li>
+</ol>
+<p><img src="images/huong-dan/s2-8/step2.png" alt="Thêm sản phẩm vào yêu thích"></p>
+<ol start="3">
+<li>Mở <code>/wishlist</code> để xem, bỏ yêu thích hoặc quay lại sản phẩm.</li>
+</ol>
+<p><img src="images/huong-dan/s2-8/step3.png" alt="Danh sách yêu thích"></p>
+<ol start="4">
+<li>Mở <code>/notifications</code> để đọc thông báo; trạng thái đã đọc được cập nhật khi chọn thông báo.</li>
+</ol>
+<p><img src="images/huong-dan/s2-8/step4.png" alt="Danh sách thông báo"></p>
+<h3 id="29-tài-khoản-và-mật-khẩu">2.9. Tài khoản và mật khẩu</h3>
+<ol>
+<li>Mở <strong>Tài khoản</strong> (<code>/account</code>) khi đã đăng nhập.</li>
+</ol>
+<p><img src="images/huong-dan/s2-9/step1.png" alt="Trang tài khoản — hồ sơ và sổ địa chỉ"></p>
+<ol start="2">
+<li>Cập nhật thông tin cá nhân hoặc <strong>thêm địa chỉ</strong> theo các trường trên trang rồi lưu.</li>
+</ol>
+<p><img src="images/huong-dan/s2-9/step2.png" alt="Form thêm địa chỉ mới"></p>
+<ol start="3">
+<li>Đăng xuất bằng nút tài khoản ở góc trên.</li>
+</ol>
+<p><img src="images/huong-dan/s2-9/step3.png" alt="Menu tài khoản với tùy chọn đăng xuất"></p>
+<ol start="4">
+<li>Nếu quên mật khẩu, mở <strong>Quên mật khẩu</strong> (<code>/forgot-password</code>), gửi email đăng ký.</li>
+</ol>
+<p><img src="images/huong-dan/s2-9/step4.png" alt="Trang quên mật khẩu"></p>
+<ol start="5">
+<li>Dùng liên kết đặt lại được gửi tới email. Nếu chưa xác nhận email, mở liên kết xác nhận trong thư.</li>
+</ol>
+<p><img src="images/huong-dan/s2-9/step5.png" alt="Xác nhận đã gửi email đặt lại mật khẩu"></p>
+<h3 id="210-tra-cứu-bảo-hành-bằng-imei-hoặc-mã-đơn">2.10. Tra cứu bảo hành bằng IMEI hoặc mã đơn</h3>
+<ol>
+<li>Mở <strong>Tra cứu bảo hành</strong> (<code>/warranty</code>) — có hai tab: <em>Theo IMEI</em> và <em>Theo mã đơn</em>.</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step1.png" alt="Biểu mẫu tra cứu bảo hành"></p>
+<ol start="2">
+<li>Nhập <strong>IMEI</strong> của máy (hoặc chuyển tab để nhập mã đơn).</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step2.png" alt="Nhập IMEI vào ô tra cứu"></p>
+<ol start="3">
+<li>Bấm <strong>Tra cứu</strong> — phiếu bảo hành hiện ngay trong trang (model, IMEI, mã đơn, trạng thái còn/hết hạn).</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step3.png" alt="Kết quả phiếu bảo hành theo IMEI"></p>
+<ol start="4">
+<li>Đối chiếu model, mã đơn, ngày bắt đầu/kết thúc và trạng thái bảo hành được trả về.</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step4.png" alt="Thẻ bảo hành với đầy đủ thông tin"></p>
+<ol start="5">
+<li>Nếu tra theo <strong>mã đơn</strong> có nhiều thiết bị, kiểm tra từng bản ghi/IMEI trong kết quả.</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step5.png" alt="Tra theo mã đơn trả về nhiều thiết bị"></p>
+<ol start="6">
+<li>Nếu không có kết quả, màn hình báo &quot;Không tìm thấy&quot; — kiểm tra lại ký tự IMEI/mã đơn và liên hệ cửa hàng.</li>
+</ol>
+<p><img src="images/huong-dan/s2-10/step6.png" alt="Trạng thái không tìm thấy phiếu bảo hành"></p>
+<p>IMEI được giữ trong hồ sơ thiết bị và quy trình bảo hành; không bỏ qua bước gán IMEI khi hoàn tất đơn.</p>
+<h3 id="211-thu-cũ-đổi-mới">2.11. Thu cũ đổi mới</h3>
+<ol>
+<li>Mở <code>/trade-in</code> — biểu mẫu khai máy cũ.</li>
+</ol>
+<p><img src="images/huong-dan/s2-11/step1.png" alt="Biểu mẫu thu cũ đổi mới"></p>
+<ol start="2">
+<li>Đăng nhập nếu được yêu cầu (nếu đã đăng nhập, biểu mẫu giữ nguyên).</li>
+</ol>
+<p><img src="images/huong-dan/s2-11/step2.png" alt="Biểu mẫu thu cũ — đã đăng nhập"></p>
+<ol start="3">
+<li>Điền <strong>model máy cũ</strong>, <strong>tình trạng</strong> và <strong>ghi chú</strong>.</li>
+</ol>
+<p><img src="images/huong-dan/s2-11/step3.png" alt="Điền thông tin máy cũ"></p>
+<ol start="4">
+<li>Gửi yêu cầu để cửa hàng tiếp nhận định giá.</li>
+</ol>
+<p><img src="images/huong-dan/s2-11/step4.png" alt="Gửi yêu cầu thu cũ thành công"></p>
+<ol start="5">
+<li>Theo dõi phản hồi từ cửa hàng qua trạng thái yêu cầu/thông báo.</li>
+</ol>
+<p><img src="images/huong-dan/s2-11/step5.png" alt="Trạng thái yêu cầu thu cũ"></p>
+<h3 id="212-trang-hỗ-trợ-và-chính-sách">2.12. Trang hỗ trợ và chính sách</h3>
+<ol>
+<li>Ở <strong>chân trang</strong> (footer) mọi trang có các liên kết: Trung tâm trợ giúp, Hướng dẫn mua hàng, Trả hàng &amp; hoàn tiền, Tra cứu bảo hành, Giới thiệu, Điều khoản, Chính sách bảo mật, Liên hệ.</li>
+</ol>
+<p><img src="images/huong-dan/s2-12/step1.png" alt="Footer với các liên kết hỗ trợ và chính sách"></p>
+<ol start="2">
+<li>Mở <strong>Chính sách bảo hành</strong> (<code>/bao-hanh</code>) để đọc nội dung chính sách.</li>
+</ol>
+<p><img src="images/huong-dan/s2-12/step2.png" alt="Trang chính sách bảo hành"></p>
+<ol start="3">
+<li>Mở <strong>Trả hàng &amp; hoàn tiền</strong> (<code>/doi-tra</code>) để xem điều kiện đổi trả.</li>
+</ol>
+<p><img src="images/huong-dan/s2-12/step3.png" alt="Trang trả hàng và hoàn tiền"></p>
+<ol start="4">
+<li>Mở <strong>Liên hệ</strong> (<code>/lien-he</code>) để lấy email, hotline và địa chỉ hỗ trợ.</li>
+</ol>
+<p><img src="images/huong-dan/s2-12/step4.png" alt="Trang liên hệ hợp tác"></p>
+<hr>
+<h2 id="3-luồng-quản-trị-viên">3. Luồng quản trị viên</h2>
+<h3 id="31-vào-trang-quản-trị">3.1. Vào trang quản trị</h3>
+<ol>
+<li>Đăng nhập bằng tài khoản có quyền admin.</li>
+</ol>
+<p><img src="images/huong-dan/s3-1/step1.png" alt="Đăng nhập tài khoản admin"></p>
+<ol start="2">
+<li>Mở <code>/admin</code> hoặc chọn <strong>Quản trị</strong> — vào trang dashboard quản trị.</li>
+</ol>
+<p><img src="images/huong-dan/s3-1/step2.png" alt="Trang dashboard quản trị"></p>
+<ol start="3">
+<li>Nếu tài khoản không có quyền admin, ứng dụng chuyển về trang khách hàng (ảnh minh họa trạng thái có quyền, vào được admin).</li>
+</ol>
+<p><img src="images/huong-dan/s3-1/step3.png" alt="Vào được trang quản trị với tài khoản có quyền"></p>
+<ol start="4">
+<li>Dùng <strong>thanh điều hướng quản trị</strong> để mở dashboard, báo cáo, sản phẩm, thương hiệu, danh mục, đơn hàng, vận chuyển, coupon, flash sale, thu cũ đổi mới và nhật ký.</li>
+</ol>
+<p><img src="images/huong-dan/s3-1/step4.png" alt="Thanh điều hướng quản trị"></p>
+<h3 id="32-dashboard-và-báo-cáo">3.2. Dashboard và báo cáo</h3>
+<ol>
+<li>Mở <strong>Dashboard</strong> để xem các số liệu tóm tắt.</li>
+</ol>
+<p><img src="images/huong-dan/s3-2/step1.png" alt="Dashboard với các thẻ số liệu"></p>
+<ol start="2">
+<li>Mở <strong>Báo cáo</strong> (<code>/admin/reports</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-2/step2.png" alt="Trang báo cáo"></p>
+<ol start="3">
+<li>Chọn khoảng thời gian/bộ lọc nếu có.</li>
+</ol>
+<p><img src="images/huong-dan/s3-2/step3.png" alt="Chọn bộ lọc trên trang báo cáo"></p>
+<ol start="4">
+<li>Đọc các biểu đồ và số liệu doanh thu, đơn hàng, sản phẩm hoặc khách hàng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-2/step4.png" alt="Biểu đồ và số liệu báo cáo"></p>
+<ol start="5">
+<li>Đối chiếu báo cáo với trạng thái đơn đã cập nhật; dữ liệu demo có thể không đại diện cho giao dịch thật.</li>
+</ol>
+<p><img src="images/huong-dan/s3-2/step5.png" alt="Phần số liệu bổ sung ở cuối trang báo cáo"></p>
+<h3 id="33-quản-lý-thương-hiệu-và-danh-mục">3.3. Quản lý thương hiệu và danh mục</h3>
+<ol>
+<li>Mở <strong>Thương hiệu</strong> hoặc <strong>Danh mục</strong> trong admin.</li>
+</ol>
+<p><img src="images/huong-dan/s3-3/step1.png" alt="Danh sách thương hiệu"></p>
+<ol start="2">
+<li>Xem danh sách hiện có; dùng tìm kiếm/lọc nếu giao diện cung cấp.</li>
+</ol>
+<p><img src="images/huong-dan/s3-3/step2.png" alt="Danh sách thương hiệu đầy đủ"></p>
+<ol start="3">
+<li>Chọn <strong>Thêm mới</strong>, điền tên và thông tin bắt buộc rồi lưu.</li>
+</ol>
+<p><img src="images/huong-dan/s3-3/step3.png" alt="Form thêm thương hiệu mới"></p>
+<ol start="4">
+<li>Dùng thao tác <strong>sửa</strong> để cập nhật thông tin.</li>
+</ol>
+<p><img src="images/huong-dan/s3-3/step4.png" alt="Form sửa thương hiệu"></p>
+<ol start="5">
+<li><strong>Xóa</strong> chỉ khi không còn sản phẩm/phụ thuộc liên quan; đọc xác nhận trước khi hoàn tất.</li>
+</ol>
+<p><img src="images/huong-dan/s3-3/step5.png" alt="Hộp xác nhận xóa"></p>
+<h3 id="34-quản-lý-sản-phẩm-biến-thể-và-tồn-kho">3.4. Quản lý sản phẩm, biến thể và tồn kho</h3>
+<ol>
+<li>Mở <strong>Sản phẩm</strong> (<code>/admin/products</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step1.png" alt="Danh sách sản phẩm quản trị"></p>
+<ol start="2">
+<li>Chọn <strong>thêm mới</strong> hoặc mở sản phẩm cần sửa.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step2.png" alt="Form thêm/sửa sản phẩm"></p>
+<ol start="3">
+<li>Nhập tên, slug, thương hiệu, danh mục, mô tả, giá, giá khuyến mãi và trạng thái hiển thị.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step3.png" alt="Nhập thông tin cơ bản của sản phẩm"></p>
+<ol start="4">
+<li>Khai báo <strong>biến thể</strong> theo màu/dung lượng và tồn kho tương ứng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step4.png" alt="Khai báo biến thể màu/dung lượng/tồn kho"></p>
+<ol start="5">
+<li>Bổ sung <strong>thông số kỹ thuật</strong> và <strong>ảnh</strong> nếu biểu mẫu có hỗ trợ.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step5.png" alt="Phần thông số kỹ thuật và ảnh"></p>
+<ol start="6">
+<li>Lưu rồi kiểm tra sản phẩm ở giao diện khách hàng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step6.png" alt="Danh sách sản phẩm sau khi lưu"></p>
+<ol start="7">
+<li>Khi xuất bán máy cụ thể, dùng quy trình đơn hàng để gán IMEI/serial cho đúng thiết bị; không dùng chung một IMEI cho nhiều máy.</li>
+</ol>
+<p><img src="images/huong-dan/s3-4/step7.png" alt="Chi tiết sản phẩm trong quản trị"></p>
+<h3 id="35-xử-lý-đơn-hàng-và-imei">3.5. Xử lý đơn hàng và IMEI</h3>
+<ol>
+<li>Mở <strong>Đơn hàng</strong> (<code>/admin/orders</code>) và lọc đơn theo trạng thái/mã đơn.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step1.png" alt="Lọc đơn hàng theo trạng thái"></p>
+<ol start="2">
+<li>Mở chi tiết đơn, đối chiếu mặt hàng, số lượng, địa chỉ và phương thức thanh toán.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step2.png" alt="Chi tiết đơn hàng"></p>
+<ol start="3">
+<li><strong>Xác nhận</strong> đơn khi đã kiểm tra tồn kho và thanh toán/điều kiện COD.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step3.png" alt="Xác nhận đơn hàng"></p>
+<ol start="4">
+<li>Trong bước chuẩn bị giao hàng, <strong>gán IMEI/serial</strong> duy nhất cho từng thiết bị điện thoại theo đơn.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step4.png" alt="Nhập IMEI cho thiết bị trong đơn"></p>
+<ol start="5">
+<li>Kiểm tra IMEI gắn đúng sản phẩm/biến thể và không bị trùng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step5.png" alt="Kiểm tra IMEI đã gán"></p>
+<ol start="6">
+<li>Cập nhật lần lượt trạng thái xử lý/giao hàng theo các thao tác được phép.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step6.png" alt="Cập nhật trạng thái giao hàng"></p>
+<ol start="7">
+<li>Khi hoàn tất, xác nhận đơn; kiểm tra IMEI và phiếu bảo hành được lưu để khách tra cứu.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step7.png" alt="Hoàn tất đơn hàng"></p>
+<ol start="8">
+<li>Chỉ hủy hoặc thay đổi trạng thái theo quy trình cửa hàng; các thay đổi được ghi vào nhật ký nếu bật audit.</li>
+</ol>
+<p><img src="images/huong-dan/s3-5/step8.png" alt="Danh sách đơn sau khi xử lý"></p>
+<blockquote>
+<p>Ghi chú: để thao tác xác nhận/gán IMEI hiển thị đầy đủ, đơn cần ở trạng thái phù hợp (ví dụ đã xác nhận, đang chuẩn bị giao). IMEI minh họa chỉ dùng để chụp, chưa ghi vào DB nếu không bấm lưu.</p>
+</blockquote>
+<h3 id="36-cấu-hình-vận-chuyển">3.6. Cấu hình vận chuyển</h3>
+<ol>
+<li>Mở <strong>Vận chuyển</strong> (<code>/admin/shipping</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-6/step1.png" alt="Danh sách phương thức vận chuyển"></p>
+<ol start="2">
+<li>Xem các phương thức, khu vực, mức phí và điều kiện đang thiết lập.</li>
+</ol>
+<p><img src="images/huong-dan/s3-6/step2.png" alt="Chi tiết phương thức, phí và điều kiện"></p>
+<ol start="3">
+<li>Thêm hoặc chỉnh sửa phương thức/phí theo các trường trên biểu mẫu.</li>
+</ol>
+<p><img src="images/huong-dan/s3-6/step3.png" alt="Form thêm/sửa phương thức vận chuyển"></p>
+<ol start="4">
+<li>Lưu và kiểm tra lựa chọn/phí hiển thị tại checkout.</li>
+</ol>
+<p><img src="images/huong-dan/s3-6/step4.png" alt="Danh sách sau khi lưu"></p>
+<h3 id="37-couponkhuyến-mãi-mã-giảm-giá">3.7. Coupon/khuyến mãi mã giảm giá</h3>
+<ol>
+<li>Mở <strong>Coupons</strong> (<code>/admin/coupons</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-7/step1.png" alt="Danh sách mã giảm giá"></p>
+<ol start="2">
+<li>Tạo mã, mô tả, loại giảm (phần trăm hoặc số tiền), mức giảm, đơn tối thiểu, thời hạn và giới hạn sử dụng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-7/step2.png" alt="Form tạo mã giảm giá"></p>
+<ol start="3">
+<li>Điền đủ thông tin rồi lưu coupon.</li>
+</ol>
+<p><img src="images/huong-dan/s3-7/step3.png" alt="Form coupon đã điền thông tin"></p>
+<ol start="4">
+<li>Kiểm tra trạng thái hoạt động trong danh sách.</li>
+</ol>
+<p><img src="images/huong-dan/s3-7/step4.png" alt="Kiểm tra coupon trong danh sách"></p>
+<ol start="5">
+<li>Khi hết hạn hoặc cần dừng, <strong>sửa</strong> trạng thái hoặc thời hạn theo lựa chọn của giao diện.</li>
+</ol>
+<p><img src="images/huong-dan/s3-7/step5.png" alt="Form sửa coupon"></p>
+<h3 id="38-flash-sale">3.8. Flash sale</h3>
+<ol>
+<li>Mở <strong>Flash Sale</strong> (<code>/admin/flash-sale</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-8/step1.png" alt="Danh sách chương trình flash sale"></p>
+<ol start="2">
+<li>Chọn sản phẩm/biến thể cho chương trình.</li>
+</ol>
+<p><img src="images/huong-dan/s3-8/step2.png" alt="Chọn sản phẩm cho flash sale"></p>
+<ol start="3">
+<li>Nhập giá sale và số lượng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-8/step3.png" alt="Nhập giá sale và số lượng"></p>
+<ol start="4">
+<li>Đặt thời gian bắt đầu/kết thúc.</li>
+</ol>
+<p><img src="images/huong-dan/s3-8/step4.png" alt="Đặt thời gian chương trình"></p>
+<ol start="5">
+<li>Lưu chương trình; kiểm tra giá và nhãn sale ở danh sách/chi tiết sản phẩm trong thời gian hiệu lực, theo dõi tồn kho để tránh bán vượt lượng.</li>
+</ol>
+<p><img src="images/huong-dan/s3-8/step5.png" alt="Danh sách flash sale sau khi lưu"></p>
+<h3 id="39-yêu-cầu-thu-cũ-đổi-mới">3.9. Yêu cầu thu cũ đổi mới</h3>
+<ol>
+<li>Mở <strong>Thu cũ đổi mới</strong> (<code>/admin/trade-in</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-9/step1.png" alt="Danh sách yêu cầu thu cũ"></p>
+<ol start="2">
+<li>Chọn yêu cầu mới và đọc model, tình trạng, ghi chú của khách.</li>
+</ol>
+<p><img src="images/huong-dan/s3-9/step2.png" alt="Chi tiết yêu cầu thu cũ"></p>
+<ol start="3">
+<li>Nhập <strong>giá định giá</strong> hoặc thông tin đề nghị theo biểu mẫu.</li>
+</ol>
+<p><img src="images/huong-dan/s3-9/step3.png" alt="Nhập giá định giá"></p>
+<ol start="4">
+<li>Chuyển trạng thái sang bước xử lý phù hợp và lưu.</li>
+</ol>
+<p><img src="images/huong-dan/s3-9/step4.png" alt="Chọn trạng thái xử lý"></p>
+<ol start="5">
+<li>Theo dõi các yêu cầu đến khi hoàn tất/từ chối.</li>
+</ol>
+<p><img src="images/huong-dan/s3-9/step5.png" alt="Theo dõi danh sách yêu cầu thu cũ"></p>
+<h3 id="310-nhật-ký-hoạt-động">3.10. Nhật ký hoạt động</h3>
+<ol>
+<li>Mở <strong>Audit logs</strong> (<code>/admin/audit-logs</code>).</li>
+</ol>
+<p><img src="images/huong-dan/s3-10/step1.png" alt="Danh sách nhật ký hoạt động"></p>
+<ol start="2">
+<li>Tìm theo loại thao tác, người thực hiện hoặc khoảng thời gian nếu có bộ lọc.</li>
+</ol>
+<p><img src="images/huong-dan/s3-10/step2.png" alt="Bộ lọc nhật ký"></p>
+<ol start="3">
+<li>Mở bản ghi để xem đối tượng và thay đổi được ghi nhận.</li>
+</ol>
+<p><img src="images/huong-dan/s3-10/step3.png" alt="Chi tiết một bản ghi nhật ký"></p>
+<ol start="4">
+<li>Dùng nhật ký để đối soát thao tác quản trị; không coi log là thay thế cho chứng từ thanh toán.</li>
+</ol>
+<p><img src="images/huong-dan/s3-10/step4.png" alt="Tổng quan nhật ký để đối soát"></p>
+<hr>
+<h2 id="4-tình-trạng-tích-hợp-và-giới-hạn-demo">4. Tình trạng tích hợp và giới hạn demo</h2>
+<ul>
+<li>VNPay trong cấu hình mẫu dùng sandbox/placeholder; thanh toán mock chỉ kiểm thử giao diện.</li>
+<li>Email mặc định dùng provider <code>Log</code>; xác nhận tài khoản/đặt lại mật khẩu cần cấu hình SMTP để nhận thư thật.</li>
+<li>MinIO phục vụ lưu ảnh; kiểm tra endpoint và credential cấu hình trước khi dùng upload thật.</li>
+<li>Không nhập thông tin thẻ thật hoặc dữ liệu khách hàng thật vào môi trường demo.</li>
+</ul>
+<h2 id="5-ghi-chú-về-ảnh-minh-họa">5. Ghi chú về ảnh minh họa</h2>
+<ul>
+<li>Toàn bộ ảnh trong tài liệu được chụp bằng <strong>Playwright</strong> trên bản đang chạy (<code>http://localhost:5174</code>) với dữ liệu seed, lưu tại <code>docs/images/huong-dan/s&lt;mục&gt;/stepN.png</code>.</li>
+<li>Một số luồng cần dữ liệu/điều kiện cụ thể mới hiện đầy đủ (ví dụ: nút thanh toán lại VNPay cần đơn VNPay chưa thanh toán; thao tác xác nhận/gán IMEI cần đơn ở trạng thái phù hợp). Các chỗ này được ghi chú ngay trong bước tương ứng.</li>
+<li>Thao tác tạo/sửa ở phần quản trị chỉ chụp minh họa biểu mẫu, không ghi bản ghi rác vào dữ liệu seed.</li>
+</ul>
+
+  </main>
+</div>
+<button id="top" title="Lên đầu trang">↑</button>
+<script>
+  // Scrollspy: tô sáng link theo heading đang hiển thị
+  const links = [...document.querySelectorAll('#toc a')];
+  const map = new Map(links.map(a => [a.dataset.id, a]));
+  const heads = links.map(a => document.getElementById(a.dataset.id)).filter(Boolean);
+  let active = null;
+  function setActive(id){
+    if(active===id) return; active=id;
+    links.forEach(a=>a.classList.toggle('active', a.dataset.id===id));
+    const a = map.get(id);
+    if(a) a.scrollIntoView({block:'nearest'});
+  }
+  const obs = new IntersectionObserver((entries)=>{
+    const vis = entries.filter(e=>e.isIntersecting)
+      .sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+    if(vis.length) setActive(vis[0].target.id);
+  }, {rootMargin:'-10% 0px -75% 0px', threshold:0});
+  heads.forEach(h=>obs.observe(h));
+  // Nút lên đầu
+  const topBtn = document.getElementById('top');
+  addEventListener('scroll', ()=>{ topBtn.classList.toggle('show', scrollY>500); });
+  topBtn.onclick = ()=>scrollTo({top:0,behavior:'smooth'});
+</script>
+</body>
+</html>
